@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ElevatorControlSystemApp</string>
+    <string name="number_elev">Number of elevators</string>
+    <string name="levels">Number of floors</string>
+    <string name="info">The above data will be used to simulate the operation of the elevator control system. You can come back to this screen at any time and change these values.</string>
+    <string name="command1">Select the number of elevators (1-16)</string>
+    <string name="command2">Select the number of floors (5-50)</string>
 </resources>
