@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.R;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.ActivityElevatorBinding;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.fragments.MainFragment;
+import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.fragments.PanelFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -44,7 +45,6 @@ public class ElevatorActivity extends AppCompatActivity {
                 load(v);
             }
         });
-
     }
 
     private void setFragment(Fragment fragment) {
@@ -108,7 +108,7 @@ public class ElevatorActivity extends AppCompatActivity {
 
                 delayedStartNextActivity();
             }
-        }, 2000);
+        }, 1700);
     }
 
     private void revealButton() {
@@ -165,9 +165,12 @@ public class ElevatorActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainer, new PanelFragment())
+                        .commit();
             }
         }, 100);
+        binding.button.setVisibility(INVISIBLE);
     }
 
     private int getFabWidth() {

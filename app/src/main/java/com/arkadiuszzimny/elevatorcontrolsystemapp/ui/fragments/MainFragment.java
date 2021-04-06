@@ -10,10 +10,7 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.NumberPicker;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
@@ -22,14 +19,12 @@ import android.widget.ViewSwitcher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.arkadiuszzimny.elevatorcontrolsystemapp.R;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.MainFragmentLayoutBinding;
+import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.MainFragmentViewModel;
 
 import dagger.hilt.android.AndroidEntryPoint;
-
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
 
 @AndroidEntryPoint
 public class MainFragment extends Fragment {
@@ -39,17 +34,19 @@ public class MainFragment extends Fragment {
     private int stringIndex2 = 10;
     private TextView textView;
     private TextView textView2;
+    private MainFragmentViewModel mainFragmentViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentLayoutBinding = MainFragmentLayoutBinding.inflate(inflater, container, false);
 
+        mainFragmentViewModel = new ViewModelProvider(this).get(MainFragmentViewModel.class);
+
         NumberPicker pickerNumber = fragmentLayoutBinding.pickerNumber;
         NumberPicker pickerLevel = fragmentLayoutBinding.pickerLevel;
         TextSwitcher textSwitcher = fragmentLayoutBinding.textSwitcher;
         TextSwitcher textSwitcher2 = fragmentLayoutBinding.textSwitcher2;
-
 
         pickerNumber.setMinValue(1);
         pickerNumber.setMaxValue(16);
