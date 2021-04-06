@@ -43,9 +43,11 @@ dependencies {
 
     implementation 'com.google.android.material:material:1.2.0-alpha02'
 
+    // Room
     implementation "androidx.room:room-runtime:2.2.6"
     annotationProcessor "androidx.room:room-compiler:2.2.6"
 
+    //Dagger - Hilt
     implementation "com.google.dagger:hilt-android:2.33-beta"
     kapt "com.google.dagger:hilt-compiler:2.33-beta"
 

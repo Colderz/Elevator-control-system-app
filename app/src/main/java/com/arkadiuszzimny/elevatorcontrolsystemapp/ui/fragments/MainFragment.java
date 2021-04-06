@@ -1,13 +1,19 @@
 package com.arkadiuszzimny.elevatorcontrolsystemapp.ui.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.NumberPicker;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
@@ -15,15 +21,17 @@ import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.arkadiuszzimny.elevatorcontrolsystemapp.R;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.MainFragmentLayoutBinding;
 
-import java.util.ArrayList;
-import java.util.List;
+import dagger.hilt.android.AndroidEntryPoint;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
+@AndroidEntryPoint
 public class MainFragment extends Fragment {
 
     MainFragmentLayoutBinding fragmentLayoutBinding;
@@ -41,6 +49,7 @@ public class MainFragment extends Fragment {
         NumberPicker pickerLevel = fragmentLayoutBinding.pickerLevel;
         TextSwitcher textSwitcher = fragmentLayoutBinding.textSwitcher;
         TextSwitcher textSwitcher2 = fragmentLayoutBinding.textSwitcher2;
+
 
         pickerNumber.setMinValue(1);
         pickerNumber.setMaxValue(16);
@@ -88,6 +97,5 @@ public class MainFragment extends Fragment {
 
         return fragmentLayoutBinding.getRoot();
     }
-
 
 }
