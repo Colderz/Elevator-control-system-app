@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.arkadiuszzimny.elevatorcontrolsystemapp.R;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.ElevatorCardLayoutBinding;
 
@@ -22,7 +21,7 @@ public class ElevatorRecyclerAdapter extends RecyclerView.Adapter<ElevatorRecycl
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater li = LayoutInflater.from(parent.getContext());
-        return new ViewHolder(ElevatorCardLayoutBinding.inflate(li));
+        return new ViewHolder(ElevatorCardLayoutBinding.inflate(li, parent, false));
     }
 
     @Override
