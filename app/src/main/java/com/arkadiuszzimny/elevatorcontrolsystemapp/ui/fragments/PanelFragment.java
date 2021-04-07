@@ -15,12 +15,14 @@ import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.PanelFragmentLayo
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.PanelFragmentViewModel;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.adapters.ElevatorRecyclerAdapter;
 
+import java.util.List;
+
 
 public class PanelFragment extends Fragment {
 
     PanelFragmentLayoutBinding fragmentLayoutBinding;
-
     private PanelFragmentViewModel panelFragmentViewModel;
+    private List<Integer> randomState;
 
     @Nullable
     @Override
@@ -34,7 +36,10 @@ public class PanelFragment extends Fragment {
         ElevatorRecyclerAdapter adapter = new ElevatorRecyclerAdapter();
         recyclerView.setAdapter(adapter);
 
-        panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> adapter.setElevators(elevatorItems));
+        panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
+            adapter.setElevators(elevatorItems);
+            randomState = panelFragmentViewModel.generateRandomState(elevatorItems.size());
+        });
 
         return fragmentLayoutBinding.getRoot();
     }

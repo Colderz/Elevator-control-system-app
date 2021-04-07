@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.arkadiuszzimny.elevatorcontrolsystemapp.R;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.MainFragmentLayoutBinding;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.MainFragmentViewModel;
@@ -56,7 +58,7 @@ public class MainFragment extends Fragment {
         setConfigurationData(mainFragmentViewModel, fragmentLayoutBinding);
 
         tvSave.setOnClickListener(v -> {
-            Toast.makeText(getActivity(), "CONFIGURATION SAVED", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.saved, Toast.LENGTH_SHORT).show();
             TextView tvElevators = (TextView) textSwitcher.getCurrentView();
             int numberOfElevators = Integer.parseInt((String) tvElevators.getText());
             TextView tvFloors = (TextView) textSwitcher2.getCurrentView();

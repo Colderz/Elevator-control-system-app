@@ -13,4 +13,6 @@
     <string name="sim">SIMULATION STEP</string>
     <string name="main_panel">System operation panel</string>
     <string name="info_sim">The started simulation is based on the randomly generated data presented below.</string>
+    <string name="remember">REMEMBER TO SAVE THE CONFIGURATION DATA!</string>
+    <string name="saved">CONFIGURATION SAVED</string>
 </resources>

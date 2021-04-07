@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.arkadiuszzimny.elevatorcontrolsystemapp.R;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.ActivityElevatorBinding;
@@ -46,6 +47,7 @@ public class ElevatorActivity extends AppCompatActivity {
     }
 
     public void load(View view) {
+        Toast.makeText(this, R.string.remember, Toast.LENGTH_SHORT).show();
         animateButtonWidth();
 
         fadeOutTextAndShowProgressDialog();

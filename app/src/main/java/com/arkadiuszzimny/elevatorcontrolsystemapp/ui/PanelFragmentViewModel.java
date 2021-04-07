@@ -9,7 +9,9 @@ import androidx.lifecycle.LiveData;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.ElevatorRepository;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PanelFragmentViewModel extends AndroidViewModel {
     private ElevatorRepository repository;
@@ -27,5 +29,15 @@ public class PanelFragmentViewModel extends AndroidViewModel {
 
     public LiveData<List<ElevatorItem>> getAllElevators() {
         return allElevators;
+    }
+
+    public List<Integer> generateRandomState(int size) {
+        System.out.println("TU JESTEM! ------------");
+        List<Integer> listRandomState = new ArrayList<>();
+        Random rand = new Random();
+        for(int i = 0; i<size; i++) {
+            listRandomState.add(rand.nextInt(3)-1);
+        }
+        return listRandomState;
     }
 }
