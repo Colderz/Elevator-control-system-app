@@ -44,6 +44,27 @@ public class MainFragment extends Fragment {
         TextSwitcher textSwitcher2 = fragmentLayoutBinding.textSwitcher2;
         TextView tvSave = fragmentLayoutBinding.tvSave;
 
+        setupPickersAndSwitchers(pickerNumber, pickerLevel, textSwitcher, textSwitcher2);
+
+        tvSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "CONFIGURATION SAVED", Toast.LENGTH_SHORT).show();
+                TextView tvElevators = (TextView) textSwitcher.getCurrentView();
+                int numberOfElevators = Integer.parseInt((String) tvElevators.getText());
+                TextView tvFloors = (TextView) textSwitcher2.getCurrentView();
+                int numberOfFloors = Integer.parseInt((String) tvFloors.getText());
+                mainFragmentViewModel.deleteAllElevators();
+                for(int i = 1; i<=numberOfElevators; i++) {
+                    mainFragmentViewModel.upsert(new ElevatorItem(i, 0, 0, numberOfFloors));
+                }
+            }
+        });
+
+        return fragmentLayoutBinding.getRoot();
+    }
+
+    private void setupPickersAndSwitchers(NumberPicker pickerNumber, NumberPicker pickerLevel, TextSwitcher textSwitcher, TextSwitcher textSwitcher2) {
         pickerNumber.setMinValue(1);
         pickerNumber.setMaxValue(16);
         pickerNumber.setValue(3);
@@ -53,7 +74,6 @@ public class MainFragment extends Fragment {
                 textSwitcher.setText(String.valueOf(picker.getValue()));
             }
         });
-
         textSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
             public View makeView() {
@@ -87,23 +107,8 @@ public class MainFragment extends Fragment {
             }
         });
         textSwitcher2.setText(String.valueOf(stringIndex2));
-
-        tvSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "CONFIGURATION SAVED", Toast.LENGTH_SHORT).show();
-                TextView tvElevators = (TextView) textSwitcher.getCurrentView();
-                int numberOfElevators = Integer.parseInt((String) tvElevators.getText());
-                TextView tvFloors = (TextView) textSwitcher2.getCurrentView();
-                int numberOfFloors = Integer.parseInt((String) tvFloors.getText());
-                mainFragmentViewModel.deleteAllElevators();
-                for(int i = 1; i<=numberOfElevators; i++) {
-                    mainFragmentViewModel.upsert(new ElevatorItem(i, 0, 0, numberOfFloors));
-                }
-            }
-        });
-
-        return fragmentLayoutBinding.getRoot();
     }
+
+
 
 }
