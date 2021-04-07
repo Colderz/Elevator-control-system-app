@@ -24,9 +24,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.MainFragmentLayoutBinding;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.MainFragmentViewModel;
 
-import dagger.hilt.android.AndroidEntryPoint;
 
-@AndroidEntryPoint
 public class MainFragment extends Fragment {
 
     MainFragmentLayoutBinding fragmentLayoutBinding;
@@ -34,7 +32,9 @@ public class MainFragment extends Fragment {
     private int stringIndex2 = 10;
     private TextView textView;
     private TextView textView2;
-    private MainFragmentViewModel mainFragmentViewModel;
+
+
+    public MainFragmentViewModel mainFragmentViewModel;
 
     @Nullable
     @Override
@@ -42,6 +42,7 @@ public class MainFragment extends Fragment {
         fragmentLayoutBinding = MainFragmentLayoutBinding.inflate(inflater, container, false);
 
         mainFragmentViewModel = new ViewModelProvider(this).get(MainFragmentViewModel.class);
+
 
         NumberPicker pickerNumber = fragmentLayoutBinding.pickerNumber;
         NumberPicker pickerLevel = fragmentLayoutBinding.pickerLevel;

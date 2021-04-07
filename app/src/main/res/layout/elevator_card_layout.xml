@@ -19,7 +19,7 @@
             android:background="@android:color/white">
 
             <TextView
-                android:id="@+id/id_elev"
+                android:id="@+id/idElev"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="12"

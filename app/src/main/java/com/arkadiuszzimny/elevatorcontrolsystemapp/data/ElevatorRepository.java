@@ -14,6 +14,7 @@ public class ElevatorRepository {
     private ElevatorDao elevatorDao;
     private LiveData<List<ElevatorItem>> allElevators;
 
+
     public ElevatorRepository(Application application) {
         ElevatorDatabase database = ElevatorDatabase.getInstance(application);
         elevatorDao = database.elevatorDao();

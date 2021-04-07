@@ -20,12 +20,9 @@ import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.ActivityElevatorB
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.fragments.MainFragment;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.fragments.PanelFragment;
 
-import dagger.hilt.android.AndroidEntryPoint;
-
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
-@AndroidEntryPoint
 public class ElevatorActivity extends AppCompatActivity {
 
     ActivityElevatorBinding binding;
@@ -169,7 +166,7 @@ public class ElevatorActivity extends AppCompatActivity {
                         .replace(R.id.fragmentContainer, new PanelFragment())
                         .commit();
             }
-        }, 100);
+        }, 200);
         binding.button.setVisibility(INVISIBLE);
     }
 
