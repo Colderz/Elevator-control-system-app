@@ -8,17 +8,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.PanelFragmentLayoutBinding;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.PanelFragmentViewModel;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.adapters.ElevatorRecyclerAdapter;
 
-import java.util.List;
 
 public class PanelFragment extends Fragment {
 
@@ -38,12 +34,7 @@ public class PanelFragment extends Fragment {
         ElevatorRecyclerAdapter adapter = new ElevatorRecyclerAdapter();
         recyclerView.setAdapter(adapter);
 
-        panelFragmentViewModel.getAllElevators().observe(getActivity(), new Observer<List<ElevatorItem>>() {
-            @Override
-            public void onChanged(List<ElevatorItem> elevatorItems) {
-                adapter.setElevators(elevatorItems);
-            }
-        });
+        panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> adapter.setElevators(elevatorItems));
 
         return fragmentLayoutBinding.getRoot();
     }

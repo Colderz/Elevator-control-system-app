@@ -36,12 +36,7 @@ public class ElevatorActivity extends AppCompatActivity {
 
         FrameLayout button = binding.button;
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                load(v);
-            }
-        });
+        button.setOnClickListener(v -> load(v));
     }
 
     private void setFragment(Fragment fragment) {
@@ -61,14 +56,11 @@ public class ElevatorActivity extends AppCompatActivity {
     private void animateButtonWidth() {
         ValueAnimator anim = ValueAnimator.ofInt(binding.button.getMeasuredWidth(), getFabWidth());
 
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                int val = (Integer) valueAnimator.getAnimatedValue();
-                ViewGroup.LayoutParams layoutParams = binding.button.getLayoutParams();
-                layoutParams.width = val;
-                binding.button.requestLayout();
-            }
+        anim.addUpdateListener(valueAnimator -> {
+            int val = (Integer) valueAnimator.getAnimatedValue();
+            ViewGroup.LayoutParams layoutParams = binding.button.getLayoutParams();
+            layoutParams.width = val;
+            binding.button.requestLayout();
         });
         anim.setDuration(250);
         anim.start();
@@ -96,15 +88,12 @@ public class ElevatorActivity extends AppCompatActivity {
     }
 
     private void nextAction() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                revealButton();
+        new Handler().postDelayed(() -> {
+            revealButton();
 
-                fadeOutProgressDialog();
+            fadeOutProgressDialog();
 
-                delayedStartNextActivity();
-            }
+            delayedStartNextActivity();
         }, 1700);
     }
 
@@ -159,14 +148,9 @@ public class ElevatorActivity extends AppCompatActivity {
     }
 
     private void delayedStartNextActivity() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContainer, new PanelFragment())
-                        .commit();
-            }
-        }, 200);
+        new Handler().postDelayed(() -> getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, new PanelFragment())
+                .commit(), 200);
         binding.button.setVisibility(INVISIBLE);
     }
 

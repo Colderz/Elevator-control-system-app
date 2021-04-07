@@ -11,7 +11,6 @@ import android.widget.NumberPicker;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewSwitcher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -23,8 +22,6 @@ import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.MainFragmentViewModel;
 public class MainFragment extends Fragment {
 
     MainFragmentLayoutBinding fragmentLayoutBinding;
-    private int stringIndex = 3;
-    private int stringIndex2 = 10;
     private TextView textView;
     private TextView textView2;
 
@@ -37,78 +34,69 @@ public class MainFragment extends Fragment {
 
         mainFragmentViewModel = new ViewModelProvider(this).get(MainFragmentViewModel.class);
 
-
-        NumberPicker pickerNumber = fragmentLayoutBinding.pickerNumber;
-        NumberPicker pickerLevel = fragmentLayoutBinding.pickerLevel;
         TextSwitcher textSwitcher = fragmentLayoutBinding.textSwitcher;
         TextSwitcher textSwitcher2 = fragmentLayoutBinding.textSwitcher2;
         TextView tvSave = fragmentLayoutBinding.tvSave;
 
-        setupPickersAndSwitchers(pickerNumber, pickerLevel, textSwitcher, textSwitcher2);
+        textSwitcher.setFactory(() -> {
+            textView = new TextView(getActivity());
+            textView.setTextColor(Color.WHITE);
+            textView.setTextSize(55);
+            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+            return textView;
+        });
+        textSwitcher2.setFactory(() -> {
+            textView2 = new TextView(getActivity());
+            textView2.setTextColor(Color.WHITE);
+            textView2.setTextSize(30);
+            textView2.setGravity(Gravity.CENTER_HORIZONTAL);
+            return textView2;
+        });
 
-        tvSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "CONFIGURATION SAVED", Toast.LENGTH_SHORT).show();
-                TextView tvElevators = (TextView) textSwitcher.getCurrentView();
-                int numberOfElevators = Integer.parseInt((String) tvElevators.getText());
-                TextView tvFloors = (TextView) textSwitcher2.getCurrentView();
-                int numberOfFloors = Integer.parseInt((String) tvFloors.getText());
-                mainFragmentViewModel.deleteAllElevators();
-                for(int i = 1; i<=numberOfElevators; i++) {
-                    mainFragmentViewModel.upsert(new ElevatorItem(i, 0, 0, numberOfFloors));
-                }
+        setConfigurationData(mainFragmentViewModel, fragmentLayoutBinding);
+
+        tvSave.setOnClickListener(v -> {
+            Toast.makeText(getActivity(), "CONFIGURATION SAVED", Toast.LENGTH_SHORT).show();
+            TextView tvElevators = (TextView) textSwitcher.getCurrentView();
+            int numberOfElevators = Integer.parseInt((String) tvElevators.getText());
+            TextView tvFloors = (TextView) textSwitcher2.getCurrentView();
+            int numberOfFloors = Integer.parseInt((String) tvFloors.getText());
+            mainFragmentViewModel.deleteAllElevators();
+            for (int i = 1; i <= numberOfElevators; i++) {
+                mainFragmentViewModel.upsert(new ElevatorItem(i, 0, 0, numberOfFloors));
             }
         });
 
         return fragmentLayoutBinding.getRoot();
     }
 
-    private void setupPickersAndSwitchers(NumberPicker pickerNumber, NumberPicker pickerLevel, TextSwitcher textSwitcher, TextSwitcher textSwitcher2) {
+    private void setupPickersAndSwitchers(NumberPicker pickerNumber, NumberPicker pickerLevel, TextSwitcher textSwitcher, TextSwitcher textSwitcher2, int elev, int floors) {
         pickerNumber.setMinValue(1);
         pickerNumber.setMaxValue(16);
-        pickerNumber.setValue(3);
-        pickerNumber.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                textSwitcher.setText(String.valueOf(picker.getValue()));
-            }
-        });
-        textSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
-            @Override
-            public View makeView() {
-                textView = new TextView(getActivity());
-                textView.setTextColor(Color.WHITE);
-                textView.setTextSize(55);
-                textView.setGravity(Gravity.CENTER_HORIZONTAL);
-                return textView;
-            }
-        });
-        textSwitcher.setText(String.valueOf(stringIndex));
+        pickerNumber.setValue(elev);
+        pickerNumber.setOnValueChangedListener((picker, oldVal, newVal) -> textSwitcher.setText(String.valueOf(picker.getValue())));
+        textSwitcher.setText(String.valueOf(elev));
 
         pickerLevel.setMinValue(5);
         pickerLevel.setMaxValue(50);
-        pickerLevel.setValue(10);
-        pickerLevel.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                textSwitcher2.setText(String.valueOf(picker.getValue()));
-            }
-        });
-
-        textSwitcher2.setFactory(new ViewSwitcher.ViewFactory() {
-            @Override
-            public View makeView() {
-                textView2 = new TextView(getActivity());
-                textView2.setTextColor(Color.WHITE);
-                textView2.setTextSize(30);
-                textView2.setGravity(Gravity.CENTER_HORIZONTAL);
-                return textView2;
-            }
-        });
-        textSwitcher2.setText(String.valueOf(stringIndex2));
+        pickerLevel.setValue(floors);
+        pickerLevel.setOnValueChangedListener((picker, oldVal, newVal) -> textSwitcher2.setText(String.valueOf(picker.getValue())));
+        textSwitcher2.setText(String.valueOf(floors));
     }
 
+    private void setConfigurationData(MainFragmentViewModel mainFragmentViewModel, MainFragmentLayoutBinding binding) {
+        mainFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
+            int numberOfElev = 3;
+            int numberOfFloors = 10;
+            if (!elevatorItems.isEmpty()) {
+                numberOfElev = elevatorItems.size();
+                numberOfFloors = elevatorItems.get(0).getMaxFloor();
+                setupPickersAndSwitchers(binding.pickerNumber, binding.pickerLevel, binding.textSwitcher, binding.textSwitcher2, numberOfElev, numberOfFloors);
+            } else {
+                setupPickersAndSwitchers(binding.pickerNumber, binding.pickerLevel, binding.textSwitcher, binding.textSwitcher2, numberOfElev, numberOfFloors);
+            }
+        });
+    }
 
 
 }
