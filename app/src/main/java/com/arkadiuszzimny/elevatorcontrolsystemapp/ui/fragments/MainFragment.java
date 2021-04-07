@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.MainFragmentLayoutBinding;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.MainFragmentViewModel;
 
@@ -32,7 +34,6 @@ public class MainFragment extends Fragment {
     private int stringIndex2 = 10;
     private TextView textView;
     private TextView textView2;
-
 
     public MainFragmentViewModel mainFragmentViewModel;
 
@@ -48,6 +49,7 @@ public class MainFragment extends Fragment {
         NumberPicker pickerLevel = fragmentLayoutBinding.pickerLevel;
         TextSwitcher textSwitcher = fragmentLayoutBinding.textSwitcher;
         TextSwitcher textSwitcher2 = fragmentLayoutBinding.textSwitcher2;
+        TextView tvSave = fragmentLayoutBinding.tvSave;
 
         pickerNumber.setMinValue(1);
         pickerNumber.setMaxValue(16);
@@ -92,6 +94,21 @@ public class MainFragment extends Fragment {
             }
         });
         textSwitcher2.setText(String.valueOf(stringIndex2));
+
+        tvSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "CONFIGURATION SAVED", Toast.LENGTH_SHORT).show();
+                TextView tvElevators = (TextView) textSwitcher.getCurrentView();
+                int numberOfElevators = Integer.parseInt((String) tvElevators.getText());
+                TextView tvFloors = (TextView) textSwitcher2.getCurrentView();
+                int numberOfFloors = Integer.parseInt((String) tvFloors.getText());
+                mainFragmentViewModel.deleteAllElevators();
+                for(int i = 1; i<=numberOfElevators; i++) {
+                    mainFragmentViewModel.upsert(new ElevatorItem(i, 0, 0, numberOfFloors));
+                }
+            }
+        });
 
         return fragmentLayoutBinding.getRoot();
     }
