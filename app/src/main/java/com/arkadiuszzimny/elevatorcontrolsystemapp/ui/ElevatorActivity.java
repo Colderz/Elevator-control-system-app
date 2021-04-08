@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -17,7 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.arkadiuszzimny.elevatorcontrolsystemapp.R;
-import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.ActivityElevatorBinding;
+import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.ActivityElevatorLayoutBinding;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.fragments.MainFragment;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.fragments.PanelFragment;
 
@@ -26,12 +27,12 @@ import static android.view.View.VISIBLE;
 
 public class ElevatorActivity extends AppCompatActivity {
 
-    ActivityElevatorBinding binding;
+    ActivityElevatorLayoutBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityElevatorBinding.inflate(getLayoutInflater());
+        binding = ActivityElevatorLayoutBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setFragment(new MainFragment());
 

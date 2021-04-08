@@ -23,5 +23,4 @@ public interface ElevatorDao {
     @Query("SELECT * FROM elevators_table ORDER BY id ASC")
     LiveData<List<ElevatorItem>> getAllElevators();
 
-
 }

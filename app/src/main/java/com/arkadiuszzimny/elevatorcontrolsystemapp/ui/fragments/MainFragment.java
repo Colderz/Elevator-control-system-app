@@ -1,6 +1,7 @@
 package com.arkadiuszzimny.elevatorcontrolsystemapp.ui.fragments;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -19,13 +20,21 @@ import androidx.lifecycle.ViewModelProvider;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.R;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.MainFragmentLayoutBinding;
+import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.ElevatorActivity;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.MainFragmentViewModel;
+
+import java.lang.annotation.Target;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainFragment extends Fragment {
 
     MainFragmentLayoutBinding fragmentLayoutBinding;
     private TextView textView;
     private TextView textView2;
+    private TextSwitcher textSwitcher;
+    private TextSwitcher textSwitcher2;
+    private TextView tvSave;
 
     public MainFragmentViewModel mainFragmentViewModel;
 
@@ -36,9 +45,9 @@ public class MainFragment extends Fragment {
 
         mainFragmentViewModel = new ViewModelProvider(this).get(MainFragmentViewModel.class);
 
-        TextSwitcher textSwitcher = fragmentLayoutBinding.textSwitcher;
-        TextSwitcher textSwitcher2 = fragmentLayoutBinding.textSwitcher2;
-        TextView tvSave = fragmentLayoutBinding.tvSave;
+        textSwitcher = fragmentLayoutBinding.textSwitcher;
+        textSwitcher2 = fragmentLayoutBinding.textSwitcher2;
+        tvSave = fragmentLayoutBinding.tvSave;
 
         textSwitcher.setFactory(() -> {
             textView = new TextView(getActivity());
@@ -63,16 +72,13 @@ public class MainFragment extends Fragment {
             int numberOfElevators = Integer.parseInt((String) tvElevators.getText());
             TextView tvFloors = (TextView) textSwitcher2.getCurrentView();
             int numberOfFloors = Integer.parseInt((String) tvFloors.getText());
-            mainFragmentViewModel.deleteAllElevators();
-            for (int i = 1; i <= numberOfElevators; i++) {
-                mainFragmentViewModel.upsert(new ElevatorItem(i, 0, 0, numberOfFloors));
-            }
+            setListOfElevatorsAndSimulationData(numberOfElevators, numberOfFloors);
         });
 
         return fragmentLayoutBinding.getRoot();
     }
 
-    private void setupPickersAndSwitchers(NumberPicker pickerNumber, NumberPicker pickerLevel, TextSwitcher textSwitcher, TextSwitcher textSwitcher2, int elev, int floors) {
+    private void setupPickersAndSwitchers(NumberPicker pickerNumber, NumberPicker pickerLevel, int elev, int floors) {
         pickerNumber.setMinValue(1);
         pickerNumber.setMaxValue(16);
         pickerNumber.setValue(elev);
@@ -93,12 +99,21 @@ public class MainFragment extends Fragment {
             if (!elevatorItems.isEmpty()) {
                 numberOfElev = elevatorItems.size();
                 numberOfFloors = elevatorItems.get(0).getMaxFloor();
-                setupPickersAndSwitchers(binding.pickerNumber, binding.pickerLevel, binding.textSwitcher, binding.textSwitcher2, numberOfElev, numberOfFloors);
+                setupPickersAndSwitchers(binding.pickerNumber, binding.pickerLevel, numberOfElev, numberOfFloors);
             } else {
-                setupPickersAndSwitchers(binding.pickerNumber, binding.pickerLevel, binding.textSwitcher, binding.textSwitcher2, numberOfElev, numberOfFloors);
+                setupPickersAndSwitchers(binding.pickerNumber, binding.pickerLevel, numberOfElev, numberOfFloors);
             }
         });
     }
 
-
+    private void setListOfElevatorsAndSimulationData(int numberOfElevators, int numberOfFloors) {
+        mainFragmentViewModel.deleteAllElevators();
+        List<Integer> listRandomFloors = mainFragmentViewModel.getRandomFloors(numberOfElevators, numberOfFloors);
+        for (int item : listRandomFloors) {
+            System.out.println(item);
+        }
+        for (int i = 1; i <= numberOfElevators; i++) {
+            mainFragmentViewModel.upsert(new ElevatorItem(i, 0, listRandomFloors.get(i-1), numberOfFloors));
+        }
+    }
 }

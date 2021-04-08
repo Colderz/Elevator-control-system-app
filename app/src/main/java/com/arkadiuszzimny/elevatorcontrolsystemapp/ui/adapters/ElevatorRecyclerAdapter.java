@@ -4,18 +4,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.ElevatorCardLayoutBinding;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ElevatorRecyclerAdapter extends RecyclerView.Adapter<ElevatorRecyclerAdapter.ViewHolder> {
-    private List<ElevatorItem> elevators = new ArrayList<>();
+    public List<ElevatorItem> elevators = new ArrayList<>();
 
     @NonNull
     @Override
@@ -28,6 +25,7 @@ public class ElevatorRecyclerAdapter extends RecyclerView.Adapter<ElevatorRecycl
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ElevatorItem currentElevator = elevators.get(position);
         holder.textViewNumber.setText(String.valueOf(currentElevator.getId()));
+        holder.textViewCurrentFloor.setText(String.valueOf(currentElevator.getCurrentFloor()));
     }
 
     @Override
@@ -42,12 +40,14 @@ public class ElevatorRecyclerAdapter extends RecyclerView.Adapter<ElevatorRecycl
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView textViewNumber;
-        private TextView textViewPassenger;
+        private TextView textViewCurrentFloor;
+        //private TextView textViewState;
 
         public ViewHolder(ElevatorCardLayoutBinding b) {
             super(b.getRoot());
             textViewNumber = b.idElev;
-            textViewPassenger = b.passengers;
+            textViewCurrentFloor = b.currentFloor;
+            //textViewState = b.state;
         }
     }
 }
