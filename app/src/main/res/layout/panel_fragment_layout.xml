@@ -175,43 +175,15 @@
                         android:textSize="12sp"
                         android:textColor="@android:color/black"
                         android:fontFamily="sans-serif-light"
-                        android:text="Lifts in motion:"
+                        android:text="Number of floors for the current system version:"
                         android:layout_marginStart="10dp"/>
 
                     <TextView
-                        android:id="@+id/tvMotion"
+                        android:id="@+id/tvFloors"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         tools:text="7"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/black"
-                        android:fontFamily="sans-serif-light"
-                        android:layout_marginStart="5dp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:textColor="@android:color/black"
-                        android:fontFamily="sans-serif-light"
-                        android:text="Lifts without passengers:"
-                        android:layout_marginStart="10dp"/>
-
-                    <TextView
-                        android:id="@+id/tvStop"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        tools:text="4"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
                         android:fontFamily="sans-serif-light"

@@ -14,7 +14,6 @@ public class ElevatorRepository {
     private ElevatorDao elevatorDao;
     private LiveData<List<ElevatorItem>> allElevators;
 
-
     public ElevatorRepository(Application application) {
         ElevatorDatabase database = ElevatorDatabase.getInstance(application);
         elevatorDao = database.elevatorDao();
@@ -32,6 +31,7 @@ public class ElevatorRepository {
     public LiveData<List<ElevatorItem>> getAllElevators() {
         return allElevators;
     }
+
 
     private static class UpsertElevatorAsyncTask extends AsyncTask<ElevatorItem, Void, Void> {
         private ElevatorDao elevatorDao;

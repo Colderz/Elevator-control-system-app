@@ -1,11 +1,14 @@
 package com.arkadiuszzimny.elevatorcontrolsystemapp.ui;
 
 import android.app.Application;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.ElevatorRepository;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -28,4 +31,7 @@ public class PanelFragmentViewModel extends AndroidViewModel {
         return allElevators;
     }
 
+    //public int getCurrentMaxFloors() {
+    //    return allElevatorsSynchr.get(1).getMaxFloor();
+    //}
 }

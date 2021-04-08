@@ -39,8 +39,11 @@ public class PanelFragment extends Fragment {
 
         panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
             adapter.setElevators(elevatorItems);
+            fragmentLayoutBinding.tvFloors.setText(String.valueOf(elevatorItems.get(1).getMaxFloor()));
         });
 
+        //int currentMaxFloors = panelFragmentViewModel.getCurrentMaxFloors();
+        //System.out.println(currentMaxFloors);
 
         return fragmentLayoutBinding.getRoot();
     }
