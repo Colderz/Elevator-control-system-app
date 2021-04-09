@@ -15,6 +15,9 @@ import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.PanelFragmentLayoutBinding;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.PanelFragmentViewModel;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.adapters.ElevatorRecyclerAdapter;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -23,6 +26,7 @@ public class PanelFragment extends Fragment {
     PanelFragmentLayoutBinding fragmentLayoutBinding;
     private PanelFragmentViewModel panelFragmentViewModel;
     private ElevatorRecyclerAdapter adapter;
+    int initCounter = 0;
 
     @Nullable
     @Override
@@ -36,19 +40,16 @@ public class PanelFragment extends Fragment {
         adapter = new ElevatorRecyclerAdapter();
         recyclerView.setAdapter(adapter);
 
-        panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
-            //adapter.setElevators(elevatorItems);
-            fragmentLayoutBinding.tvFloors.setText(String.valueOf(elevatorItems.get(1).getMaxFloor()));
-            initStartRandomSimulationData();
-        });
+            panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
+                fragmentLayoutBinding.tvFloors.setText(String.valueOf(elevatorItems.get(1).getMaxFloor()));
+                adapter.setElevators(elevatorItems);
+            });
 
 
         return fragmentLayoutBinding.getRoot();
     }
 
-    private void initStartRandomSimulationData() {
 
-    }
 
 
 }

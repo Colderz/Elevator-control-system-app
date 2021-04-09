@@ -30,8 +30,4 @@ public class PanelFragmentViewModel extends AndroidViewModel {
     public LiveData<List<ElevatorItem>> getAllElevators() {
         return allElevators;
     }
-
-    //public int getCurrentMaxFloors() {
-    //    return allElevatorsSynchr.get(1).getMaxFloor();
-    //}
 }

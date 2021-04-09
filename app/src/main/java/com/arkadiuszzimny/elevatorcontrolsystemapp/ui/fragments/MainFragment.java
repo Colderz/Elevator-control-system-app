@@ -108,12 +108,11 @@ public class MainFragment extends Fragment {
 
     private void setListOfElevators(int numberOfElevators, int numberOfFloors) {
         mainFragmentViewModel.deleteAllElevators();
-        //List<Integer> listRandomFloors = mainFragmentViewModel.getRandomFloors(numberOfElevators, numberOfFloors);
-        //for (int item : listRandomFloors) {
-        //    System.out.println(item);
-        //}
         for (int i = 1; i <= numberOfElevators; i++) {
-            mainFragmentViewModel.upsert(new ElevatorItem(i, 0, 0, numberOfFloors, 0));
+            int state = mainFragmentViewModel.generateRandomState();
+            int currLevel = mainFragmentViewModel.generateRandomLevel(numberOfFloors);
+            //mainFragmentViewModel.upsert(new ElevatorItem(i, 0, 0, 0, 0));
+            mainFragmentViewModel.updateItem(i, 0, currLevel, numberOfFloors, state);
         }
     }
 }

@@ -32,7 +32,6 @@ public class ElevatorRepository {
         return allElevators;
     }
 
-
     private static class UpsertElevatorAsyncTask extends AsyncTask<ElevatorItem, Void, Void> {
         private ElevatorDao elevatorDao;
 
@@ -60,6 +59,5 @@ public class ElevatorRepository {
             return null;
         }
     }
-
 
 }

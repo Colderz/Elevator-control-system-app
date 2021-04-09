@@ -26,6 +26,17 @@ public class ElevatorRecyclerAdapter extends RecyclerView.Adapter<ElevatorRecycl
         ElevatorItem currentElevator = elevators.get(position);
         holder.textViewNumber.setText(String.valueOf(currentElevator.getId()));
         holder.textViewCurrentFloor.setText(String.valueOf(currentElevator.getCurrentFloor()));
+        switch (currentElevator.getState()) {
+            case 0:
+                holder.textViewState.setText("Empty");
+                break;
+            case 1:
+                holder.textViewState.setText("UP");
+                break;
+            case -1:
+                holder.textViewState.setText("DOWN");
+                break;
+        }
     }
 
     @Override
@@ -41,13 +52,13 @@ public class ElevatorRecyclerAdapter extends RecyclerView.Adapter<ElevatorRecycl
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView textViewNumber;
         private TextView textViewCurrentFloor;
-        //private TextView textViewState;
+        private TextView textViewState;
 
         public ViewHolder(ElevatorCardLayoutBinding b) {
             super(b.getRoot());
             textViewNumber = b.idElev;
             textViewCurrentFloor = b.currentFloor;
-            //textViewState = b.state;
+            textViewState = b.state;
         }
     }
 }

@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
 
-@Database(entities = {ElevatorItem.class}, version = 3, exportSchema = false)
+@Database(entities = {ElevatorItem.class}, version = 4, exportSchema = false)
 public abstract class ElevatorDatabase extends RoomDatabase {
 
     private static ElevatorDatabase instance;
