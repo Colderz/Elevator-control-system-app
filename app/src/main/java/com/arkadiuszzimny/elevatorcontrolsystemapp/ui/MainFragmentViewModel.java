@@ -6,12 +6,17 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.ElevatorRepository;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.stream.Collectors;
 
 public class MainFragmentViewModel extends AndroidViewModel {
     private ElevatorRepository repository;
@@ -70,8 +75,27 @@ public class MainFragmentViewModel extends AndroidViewModel {
         }
         if(!(orderLevels.size()>0)) {
             orderLevels.add("-1");
+            upsert(new ElevatorItem(id, orderLevels, currLevel, maxLevel, state));
+        } else {
+            sortList(orderLevels, state);
+            upsert(new ElevatorItem(id, orderLevels, currLevel, maxLevel, state));
         }
-        upsert(new ElevatorItem(id, orderLevels, currLevel, maxLevel, state));
+
     }
+
+    private void sortList(ArrayList<String> orderLevels, int state) {
+        List<Integer> sortedList = new ArrayList<>();
+        for(String item : orderLevels) sortedList.add(Integer.parseInt(item));
+        orderLevels.clear();
+        Set<Integer> set = new HashSet<>(sortedList);
+        sortedList.clear();
+        sortedList.addAll(set);
+        if(state == -1) Collections.sort(sortedList, Collections.reverseOrder());
+        if(state == 1) Collections.sort(sortedList);
+        for(int item : sortedList) {
+            orderLevels.add(String.valueOf(item));
+        }
+    }
+
 
 }
