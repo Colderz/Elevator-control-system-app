@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.NumberPicker;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ public class MainFragment extends Fragment {
     private TextView textView2;
     private TextSwitcher textSwitcher;
     private TextSwitcher textSwitcher2;
-    private TextView tvSave;
+    private FrameLayout saveButton;
 
     public MainFragmentViewModel mainFragmentViewModel;
 
@@ -48,7 +49,7 @@ public class MainFragment extends Fragment {
 
         textSwitcher = fragmentLayoutBinding.textSwitcher;
         textSwitcher2 = fragmentLayoutBinding.textSwitcher2;
-        tvSave = fragmentLayoutBinding.tvSave;
+        saveButton = fragmentLayoutBinding.saveButton;
 
         textSwitcher.setFactory(() -> {
             textView = new TextView(getActivity());
@@ -67,7 +68,7 @@ public class MainFragment extends Fragment {
 
         setConfigurationData(mainFragmentViewModel, fragmentLayoutBinding);
 
-        tvSave.setOnClickListener(v -> {
+        saveButton.setOnClickListener(v -> {
             Toast.makeText(getActivity(), R.string.saved, Toast.LENGTH_SHORT).show();
             TextView tvElevators = (TextView) textSwitcher.getCurrentView();
             int numberOfElevators = Integer.parseInt((String) tvElevators.getText());

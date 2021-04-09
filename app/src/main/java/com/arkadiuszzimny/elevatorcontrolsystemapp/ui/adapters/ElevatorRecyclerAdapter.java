@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.arkadiuszzimny.elevatorcontrolsystemapp.R;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.ElevatorCardLayoutBinding;
 import java.util.ArrayList;
@@ -28,21 +30,20 @@ public class ElevatorRecyclerAdapter extends RecyclerView.Adapter<ElevatorRecycl
         holder.textViewCurrentFloor.setText(String.valueOf(currentElevator.getCurrentFloor()));
         switch (currentElevator.getState()) {
             case 0:
-                holder.textViewState.setText("Empty");
+                holder.textViewState.setText(R.string.empty);
                 break;
             case 1:
-                holder.textViewState.setText("UP");
+                holder.textViewState.setText(R.string.up);
                 break;
             case -1:
-                holder.textViewState.setText("DOWN");
+                holder.textViewState.setText(R.string.down);
                 break;
         }
-        /*if(currentElevator.getTargetFloors().get(0).equals("-1")) {
-            holder.textViewOrders.setText("LACK");
+        if(String.valueOf(currentElevator.getTargetFloors().get(0)).equals("-1")) {
+            holder.textViewOrders.setText(R.string.lack);
         } else {
             holder.textViewOrders.setText(String.valueOf(currentElevator.getTargetFloors()));
-        }*/
-        holder.textViewOrders.setText(String.valueOf(currentElevator.getTargetFloors()));
+        }
     }
 
     @Override

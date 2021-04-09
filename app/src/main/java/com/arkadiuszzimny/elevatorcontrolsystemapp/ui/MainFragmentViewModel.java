@@ -62,10 +62,8 @@ public class MainFragmentViewModel extends AndroidViewModel {
                 break;
             case 1:
                 int ordersUp = rand.nextInt(6)+1;
-                System.out.println("JESTEMMMMM TU HALOOOOOOOOOOOOOOOOOOO --------");
                 for(int i = 0; i<ordersUp; i++) {
                     int a = currLevel + rand.nextInt(maxLevel - currLevel)+1;
-                    System.out.println(a);
                     orderLevels.add(String.valueOf(a));
                 }
                 break;

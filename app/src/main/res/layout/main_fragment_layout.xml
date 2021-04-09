@@ -223,36 +223,50 @@
 
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/save_card"
-        android:layout_width="120dp"
+    <FrameLayout
+        android:id="@+id/saveButton"
+        android:layout_width="135dp"
         android:layout_height="55dp"
-        app:cardCornerRadius="30dp"
+        android:background="@drawable/simulation_btn"
+        android:elevation="4dp"
+        android:foreground="?selectableItemBackground"
+        android:clickable="true"
         android:layout_marginTop="235dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
             <TextView
-                android:id="@+id/tvSave"
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SAVE"
-                android:textColor="@android:color/black"
-                android:fontFamily="sans-serif-light"
-                android:textSize="18sp"
                 android:clickable="true"
+                android:fontFamily="sans-serif-light"
+                android:text="SAVE"
+                android:layout_marginTop="8dp"
+                android:textColor="@android:color/black"
+                android:textSize="17sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center_horizontal"
+                android:text="and generate simulation data"
+                android:textColor="@android:color/black"
+                android:textSize="9sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
