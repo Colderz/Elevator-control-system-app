@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
 
-@Database(entities = {ElevatorItem.class}, version = 2, exportSchema = false)
+@Database(entities = {ElevatorItem.class}, version = 3, exportSchema = false)
 public abstract class ElevatorDatabase extends RoomDatabase {
 
     private static ElevatorDatabase instance;
@@ -44,7 +44,7 @@ public abstract class ElevatorDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            elevatorDao.upsert(new ElevatorItem(1, 5, 1, 20));
+            elevatorDao.upsert(new ElevatorItem(1, 5, 1, 20, 0));
             return null;
         }
     }

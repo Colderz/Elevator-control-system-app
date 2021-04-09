@@ -72,7 +72,7 @@ public class MainFragment extends Fragment {
             int numberOfElevators = Integer.parseInt((String) tvElevators.getText());
             TextView tvFloors = (TextView) textSwitcher2.getCurrentView();
             int numberOfFloors = Integer.parseInt((String) tvFloors.getText());
-            setListOfElevatorsAndSimulationData(numberOfElevators, numberOfFloors);
+            setListOfElevators(numberOfElevators, numberOfFloors);
         });
 
         return fragmentLayoutBinding.getRoot();
@@ -106,14 +106,14 @@ public class MainFragment extends Fragment {
         });
     }
 
-    private void setListOfElevatorsAndSimulationData(int numberOfElevators, int numberOfFloors) {
+    private void setListOfElevators(int numberOfElevators, int numberOfFloors) {
         mainFragmentViewModel.deleteAllElevators();
-        List<Integer> listRandomFloors = mainFragmentViewModel.getRandomFloors(numberOfElevators, numberOfFloors);
-        for (int item : listRandomFloors) {
-            System.out.println(item);
-        }
+        //List<Integer> listRandomFloors = mainFragmentViewModel.getRandomFloors(numberOfElevators, numberOfFloors);
+        //for (int item : listRandomFloors) {
+        //    System.out.println(item);
+        //}
         for (int i = 1; i <= numberOfElevators; i++) {
-            mainFragmentViewModel.upsert(new ElevatorItem(i, 0, listRandomFloors.get(i-1), numberOfFloors));
+            mainFragmentViewModel.upsert(new ElevatorItem(i, 0, 0, numberOfFloors, 0));
         }
     }
 }

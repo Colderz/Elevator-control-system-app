@@ -22,7 +22,6 @@ public class PanelFragment extends Fragment {
 
     PanelFragmentLayoutBinding fragmentLayoutBinding;
     private PanelFragmentViewModel panelFragmentViewModel;
-    private List<Integer> randomFloors;
     private ElevatorRecyclerAdapter adapter;
 
     @Nullable
@@ -38,14 +37,17 @@ public class PanelFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
-            adapter.setElevators(elevatorItems);
+            //adapter.setElevators(elevatorItems);
             fragmentLayoutBinding.tvFloors.setText(String.valueOf(elevatorItems.get(1).getMaxFloor()));
+            initStartRandomSimulationData();
         });
 
-        //int currentMaxFloors = panelFragmentViewModel.getCurrentMaxFloors();
-        //System.out.println(currentMaxFloors);
 
         return fragmentLayoutBinding.getRoot();
+    }
+
+    private void initStartRandomSimulationData() {
+
     }
 
 

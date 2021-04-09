@@ -17,12 +17,15 @@ public class ElevatorItem {
     private int currentFloor;
     @ColumnInfo(name = "max_floor")
     private int maxFloor;
+    @ColumnInfo(name = "state")
+    private int state;
 
-    public ElevatorItem(int id, int targetFloor, int currentFloor, int maxFloor) {
+    public ElevatorItem(int id, int targetFloor, int currentFloor, int maxFloor, int state) {
         this.id = id;
         this.targetFloor = targetFloor;
         this.currentFloor = currentFloor;
         this.maxFloor = maxFloor;
+        this.state = state;
     }
 
     public int getId() {
@@ -40,4 +43,6 @@ public class ElevatorItem {
     public int getMaxFloor() {
         return maxFloor;
     }
+
+    public int getState() { return state; }
 }

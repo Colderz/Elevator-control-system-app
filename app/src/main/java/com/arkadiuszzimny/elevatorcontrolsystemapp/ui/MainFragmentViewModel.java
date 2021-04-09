@@ -33,12 +33,12 @@ public class MainFragmentViewModel extends AndroidViewModel {
         return allElevators;
     }
 
-    public List<Integer> getRandomFloors(int numberOfElevators, int numberOfFloors) {
-        List<Integer> listRandomFloor = new ArrayList<>();
-        Random rand = new Random();
-        for(int i = 1; i<=numberOfElevators; i++) {
-            listRandomFloor.add(rand.nextInt(numberOfFloors+1));
-        }
-        return listRandomFloor;
-    }
+    //public List<Integer> getRandomFloors(int numberOfElevators, int numberOfFloors) {
+    //    List<Integer> listRandomFloor = new ArrayList<>();
+    //    Random rand = new Random();
+    //    for(int i = 1; i<=numberOfElevators; i++) {
+    //        listRandomFloor.add(rand.nextInt(numberOfFloors+1));
+    //    }
+    //    return listRandomFloor;
+    //}
 }
