@@ -4,6 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
 
 @Entity(tableName = "elevators_table")
 public class ElevatorItem {
@@ -11,8 +19,8 @@ public class ElevatorItem {
     @PrimaryKey
     @ColumnInfo(name = "id")
     private int id;
-    @ColumnInfo(name = "target_floor")
-    private int targetFloor;
+    @ColumnInfo(name = "target_floors")
+    private ArrayList<String> targetFloors;
     @ColumnInfo(name = "current_floor")
     private int currentFloor;
     @ColumnInfo(name = "max_floor")
@@ -20,9 +28,9 @@ public class ElevatorItem {
     @ColumnInfo(name = "state")
     private int state;
 
-    public ElevatorItem(int id, int targetFloor, int currentFloor, int maxFloor, int state) {
+    public ElevatorItem(int id, ArrayList<String> targetFloors, int currentFloor, int maxFloor, int state) {
         this.id = id;
-        this.targetFloor = targetFloor;
+        this.targetFloors = targetFloors;
         this.currentFloor = currentFloor;
         this.maxFloor = maxFloor;
         this.state = state;
@@ -32,8 +40,8 @@ public class ElevatorItem {
         return id;
     }
 
-    public int getTargetFloor() {
-        return targetFloor;
+    public ArrayList<String> getTargetFloors() {
+        return targetFloors;
     }
 
     public int getCurrentFloor() {
@@ -45,4 +53,5 @@ public class ElevatorItem {
     }
 
     public int getState() { return state; }
+
 }

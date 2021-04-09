@@ -17,7 +17,6 @@ public class MainFragmentViewModel extends AndroidViewModel {
     private ElevatorRepository repository;
     private LiveData<List<ElevatorItem>> allElevators;
     private Random rand = new Random();
-    private ArrayList<Integer> orderLevels = new ArrayList<>();
 
     public MainFragmentViewModel(@NonNull Application application) {
         super(application);
@@ -46,6 +45,7 @@ public class MainFragmentViewModel extends AndroidViewModel {
     }
 
     public void updateItem(int id, int currLevel, int maxLevel, int state) {
+        ArrayList<String> orderLevels = new ArrayList<>();
         if(state == -1 && currLevel == 0) {
             state = 0;
         }
@@ -57,20 +57,23 @@ public class MainFragmentViewModel extends AndroidViewModel {
             case -1:
                 int ordersDown = rand.nextInt(6)+1;
                 for(int i = 0; i<ordersDown; i++) {
-                    orderLevels.add(rand.nextInt(currLevel));
+                    orderLevels.add(String.valueOf(rand.nextInt(currLevel)));
                 }
                 break;
             case 1:
                 int ordersUp = rand.nextInt(6)+1;
+                System.out.println("JESTEMMMMM TU HALOOOOOOOOOOOOOOOOOOO --------");
                 for(int i = 0; i<ordersUp; i++) {
-                    orderLevels.add(currLevel + rand.nextInt(maxLevel-currLevel)+1);
+                    int a = currLevel + rand.nextInt(maxLevel - currLevel)+1;
+                    System.out.println(a);
+                    orderLevels.add(String.valueOf(a));
                 }
                 break;
         }
         if(!(orderLevels.size()>0)) {
-            orderLevels.add(-1);
+            orderLevels.add("-1");
         }
-        upsert(new ElevatorItem(id, orderLevels.get(0), currLevel, maxLevel, state));
+        upsert(new ElevatorItem(id, orderLevels, currLevel, maxLevel, state));
     }
 
 }

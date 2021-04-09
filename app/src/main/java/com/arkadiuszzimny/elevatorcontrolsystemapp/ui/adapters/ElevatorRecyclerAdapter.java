@@ -37,11 +37,12 @@ public class ElevatorRecyclerAdapter extends RecyclerView.Adapter<ElevatorRecycl
                 holder.textViewState.setText("DOWN");
                 break;
         }
-        if(currentElevator.getTargetFloor() == -1) {
+        /*if(currentElevator.getTargetFloors().get(0).equals("-1")) {
             holder.textViewOrders.setText("LACK");
         } else {
-            holder.textViewOrders.setText(String.valueOf(currentElevator.getTargetFloor()));
-        }
+            holder.textViewOrders.setText(String.valueOf(currentElevator.getTargetFloors()));
+        }*/
+        holder.textViewOrders.setText(String.valueOf(currentElevator.getTargetFloors()));
     }
 
     @Override

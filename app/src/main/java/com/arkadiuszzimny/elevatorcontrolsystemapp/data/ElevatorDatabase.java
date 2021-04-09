@@ -7,11 +7,16 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
 
-@Database(entities = {ElevatorItem.class}, version = 4, exportSchema = false)
+import java.util.ArrayList;
+import java.util.Arrays;
+
+@Database(entities = {ElevatorItem.class}, version = 6, exportSchema = false)
+@TypeConverters({Converters.class})
 public abstract class ElevatorDatabase extends RoomDatabase {
 
     private static ElevatorDatabase instance;
@@ -44,7 +49,7 @@ public abstract class ElevatorDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            elevatorDao.upsert(new ElevatorItem(1, 5, 1, 20, 0));
+            elevatorDao.upsert(new ElevatorItem(1, new ArrayList<>(Arrays.asList("-1")), 1, 20, 0));
             return null;
         }
     }

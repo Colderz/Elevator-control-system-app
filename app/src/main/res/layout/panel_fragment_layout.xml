@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
+        android:layout_height="265dp"
         android:background="@color/colorPrimaryDark"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/elevator_card_layout"
             tools:orientation="horizontal">
@@ -66,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginHorizontal="31dp"
-        android:layout_marginTop="235dp"
+        android:layout_marginTop="242dp"
         app:cardCornerRadius="21dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
