@@ -37,6 +37,11 @@ public class ElevatorRecyclerAdapter extends RecyclerView.Adapter<ElevatorRecycl
                 holder.textViewState.setText("DOWN");
                 break;
         }
+        if(currentElevator.getTargetFloor() == -1) {
+            holder.textViewOrders.setText("LACK");
+        } else {
+            holder.textViewOrders.setText(String.valueOf(currentElevator.getTargetFloor()));
+        }
     }
 
     @Override
@@ -53,12 +58,14 @@ public class ElevatorRecyclerAdapter extends RecyclerView.Adapter<ElevatorRecycl
         private TextView textViewNumber;
         private TextView textViewCurrentFloor;
         private TextView textViewState;
+        private TextView textViewOrders;
 
         public ViewHolder(ElevatorCardLayoutBinding b) {
             super(b.getRoot());
             textViewNumber = b.idElev;
             textViewCurrentFloor = b.currentFloor;
             textViewState = b.state;
+            textViewOrders = b.orders;
         }
     }
 }

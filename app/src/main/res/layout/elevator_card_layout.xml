@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="110dp"
-    android:layout_height="115dp"
+    android:layout_height="125dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:clickable="true"
@@ -120,6 +120,18 @@
                     android:paddingStart="8dp"
                     android:paddingTop="2dp"
                     />
+
+                <TextView
+                    android:id="@+id/orders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-light"
+                    android:paddingStart="4dp"
+                    tools:text="14"
+                    android:paddingTop="3dp"
+                    android:textColor="@android:color/black"/>
 
             </LinearLayout>
 
