@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -40,16 +41,15 @@ public class PanelFragment extends Fragment {
         adapter = new ElevatorRecyclerAdapter();
         recyclerView.setAdapter(adapter);
 
-            panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
-                fragmentLayoutBinding.tvFloors.setText(String.valueOf(elevatorItems.get(1).getMaxFloor()));
+        panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
+            if(elevatorItems.size()>0) {
+                fragmentLayoutBinding.tvFloors.setText(String.valueOf(elevatorItems.get(0).getMaxFloor()));
                 adapter.setElevators(elevatorItems);
-            });
-
+            }
+        });
 
         return fragmentLayoutBinding.getRoot();
     }
-
-
 
 
 }
