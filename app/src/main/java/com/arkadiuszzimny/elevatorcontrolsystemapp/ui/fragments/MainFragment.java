@@ -12,6 +12,7 @@ import android.widget.NumberPicker;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -111,7 +112,12 @@ public class MainFragment extends Fragment {
         for (int i = 1; i <= numberOfElevators; i++) {
             int state = mainFragmentViewModel.generateRandomState();
             int currLevel = mainFragmentViewModel.generateRandomLevel(numberOfFloors);
-            //mainFragmentViewModel.upsert(new ElevatorItem(i, 0, 0, 0, 0));
+            if(state == -1 && currLevel == 0) {
+                state = 0;
+            }
+            if(state == 1 && currLevel == numberOfFloors) {
+                state = 0;
+            }
             mainFragmentViewModel.updateItem(i, 0, currLevel, numberOfFloors, state);
         }
     }

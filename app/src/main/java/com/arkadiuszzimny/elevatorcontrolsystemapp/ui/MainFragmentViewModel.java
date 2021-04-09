@@ -14,7 +14,7 @@ import java.util.Random;
 public class MainFragmentViewModel extends AndroidViewModel {
     private ElevatorRepository repository;
     private LiveData<List<ElevatorItem>> allElevators;
-    Random rand = new Random();
+    private Random rand = new Random();
 
     public MainFragmentViewModel(@NonNull Application application) {
         super(application);
@@ -22,7 +22,7 @@ public class MainFragmentViewModel extends AndroidViewModel {
         allElevators = repository.getAllElevators();
     }
 
-    public void upsert(ElevatorItem item) {
+    private void upsert(ElevatorItem item) {
         repository.upsert(item);
     }
 
@@ -46,12 +46,4 @@ public class MainFragmentViewModel extends AndroidViewModel {
         upsert(new ElevatorItem(id, targetFloor, currLevel, maxLevel, state));
     }
 
-    //public List<Integer> getRandomFloors(int numberOfElevators, int numberOfFloors) {
-    //    List<Integer> listRandomFloor = new ArrayList<>();
-    //    Random rand = new Random();
-    //    for(int i = 1; i<=numberOfElevators; i++) {
-    //        listRandomFloor.add(rand.nextInt(numberOfFloors+1));
-    //    }
-    //    return listRandomFloor;
-    //}
 }
