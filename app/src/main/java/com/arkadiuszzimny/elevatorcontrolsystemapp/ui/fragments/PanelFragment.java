@@ -16,11 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.arkadiuszzimny.elevatorcontrolsystemapp.R;
+import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.PanelFragmentLayoutBinding;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.PanelFragmentViewModel;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.adapters.ElevatorRecyclerAdapter;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.util.BubbleInterpolator;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -31,6 +33,7 @@ public class PanelFragment extends Fragment {
     private ElevatorRecyclerAdapter adapter;
     private Animation bubble;
     private BubbleInterpolator bubbleInterpolator;
+    private int clickSimulationCounter;
 
     @Nullable
     @Override
@@ -41,6 +44,7 @@ public class PanelFragment extends Fragment {
         RecyclerView recyclerView = fragmentLayoutBinding.recyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
 
+        clickSimulationCounter = 0;
 
         adapter = new ElevatorRecyclerAdapter();
         recyclerView.setAdapter(adapter);
@@ -50,27 +54,29 @@ public class PanelFragment extends Fragment {
         bubble.setInterpolator(bubbleInterpolator);
 
         panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
-            if(elevatorItems.size()>0) {
-                fragmentLayoutBinding.tvFloors.setText(String.valueOf(elevatorItems.get(0).getMaxFloor()));
-                adapter.setElevators(elevatorItems);
-            } else {
-                Toast.makeText(getActivity(), R.string.warn_data, Toast.LENGTH_SHORT).show();
-            }
+                if(elevatorItems.size()>0) {
+                    fragmentLayoutBinding.tvFloors.setText(String.valueOf(elevatorItems.get(0).getMaxFloor()));
+                    adapter.setElevators(elevatorItems);
+                } else {
+                    Toast.makeText(getActivity(), R.string.warn_data, Toast.LENGTH_SHORT).show();
+                }
         });
 
         fragmentLayoutBinding.simulationButton.setOnClickListener(v -> {
-            AtomicInteger counter = new AtomicInteger();
-            panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
-                if(counter.get() == 0) {
-                    counter.getAndIncrement();
-                    panelFragmentViewModel.stepSimulation(elevatorItems);
-                }
-            });
-            fragmentLayoutBinding.simulationButton.startAnimation(bubble);
+            clickSimulationCounter++;
+            if(!(clickSimulationCounter>6)) {
+                AtomicInteger counter = new AtomicInteger();
+                panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
+                    if(counter.get() == 0) {
+                        counter.getAndIncrement();
+                        panelFragmentViewModel.stepSimulation(elevatorItems);
+                    }
+                });
+                fragmentLayoutBinding.simulationButton.startAnimation(bubble);
+            }
         });
 
         return fragmentLayoutBinding.getRoot();
     }
-
 
 }

@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
+        android:id="@+id/circleNumber"
         android:layout_width="23dp"
         android:layout_height="23dp"
         android:background="@drawable/simulation_btn"
@@ -38,6 +39,7 @@
     </FrameLayout>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="100dp"
         android:layout_height="121dp"
         android:layout_margin="4dp"
