@@ -19,16 +19,16 @@ public class ElevatorItem {
     @PrimaryKey
     @ColumnInfo(name = "id")
     private int id;
-    @ColumnInfo(name = "target_floors")
-    private ArrayList<String> targetFloors;
     @ColumnInfo(name = "current_floor")
     private int currentFloor;
+    @ColumnInfo(name = "target_floors")
+    private ArrayList<String> targetFloors;
     @ColumnInfo(name = "max_floor")
     private int maxFloor;
     @ColumnInfo(name = "state")
     private int state;
 
-    public ElevatorItem(int id, ArrayList<String> targetFloors, int currentFloor, int maxFloor, int state) {
+    public ElevatorItem(int id, int currentFloor, ArrayList<String> targetFloors, int maxFloor, int state) {
         this.id = id;
         this.targetFloors = targetFloors;
         this.currentFloor = currentFloor;

@@ -25,4 +25,5 @@
     <string name="down">DOWN</string>
     <string name="lack">LACK</string>
     <string name="empty_info"><![CDATA[EMPTY -> There are no passengers in the elevator]]></string>
+    <string name="warn_data">SET UP THE SIMULATION DATA FIRST</string>
 </resources>

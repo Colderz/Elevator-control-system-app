@@ -31,7 +31,7 @@ import java.util.List;
 
 public class MainFragment extends Fragment {
 
-    MainFragmentLayoutBinding fragmentLayoutBinding;
+    private MainFragmentLayoutBinding fragmentLayoutBinding;
     private TextView textView;
     private TextView textView2;
     private TextSwitcher textSwitcher;

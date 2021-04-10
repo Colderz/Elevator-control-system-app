@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,22 +13,19 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
+import com.arkadiuszzimny.elevatorcontrolsystemapp.R;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.PanelFragmentLayoutBinding;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.PanelFragmentViewModel;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.adapters.ElevatorRecyclerAdapter;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class PanelFragment extends Fragment {
 
-    PanelFragmentLayoutBinding fragmentLayoutBinding;
+    private PanelFragmentLayoutBinding fragmentLayoutBinding;
     private PanelFragmentViewModel panelFragmentViewModel;
     private ElevatorRecyclerAdapter adapter;
-    int initCounter = 0;
 
     @Nullable
     @Override
@@ -45,7 +43,19 @@ public class PanelFragment extends Fragment {
             if(elevatorItems.size()>0) {
                 fragmentLayoutBinding.tvFloors.setText(String.valueOf(elevatorItems.get(0).getMaxFloor()));
                 adapter.setElevators(elevatorItems);
+            } else {
+                Toast.makeText(getActivity(), R.string.warn_data, Toast.LENGTH_SHORT).show();
             }
+        });
+
+        fragmentLayoutBinding.simulationButton.setOnClickListener(v -> {
+            AtomicInteger counter = new AtomicInteger();
+            panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
+                if(counter.get() == 0) {
+                    counter.getAndIncrement();
+                    panelFragmentViewModel.stepSimulation(elevatorItems);
+                }
+            });
         });
 
         return fragmentLayoutBinding.getRoot();

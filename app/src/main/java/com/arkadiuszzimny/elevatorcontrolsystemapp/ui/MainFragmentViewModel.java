@@ -75,10 +75,10 @@ public class MainFragmentViewModel extends AndroidViewModel {
         }
         if(!(orderLevels.size()>0)) {
             orderLevels.add("-1");
-            upsert(new ElevatorItem(id, orderLevels, currLevel, maxLevel, state));
+            upsert(new ElevatorItem(id, currLevel, orderLevels, maxLevel, state));
         } else {
             sortList(orderLevels, state);
-            upsert(new ElevatorItem(id, orderLevels, currLevel, maxLevel, state));
+            upsert(new ElevatorItem(id, currLevel, orderLevels, maxLevel, state));
         }
 
     }
