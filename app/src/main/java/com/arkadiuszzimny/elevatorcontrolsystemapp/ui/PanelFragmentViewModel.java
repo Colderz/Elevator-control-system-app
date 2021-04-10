@@ -31,7 +31,6 @@ public class PanelFragmentViewModel extends AndroidViewModel {
     }
 
     public void stepSimulation(List<ElevatorItem> elevatorItems) {
-        //upsert(new ElevatorItem(1, Integer.parseInt(String.valueOf(elevatorItems.get(0).getTargetFloors().get(0))), step(elevatorItems.get(0).getCurrentFloor(), elevatorItems.get(0).getTargetFloors()), elevatorItems.get(0).getMaxFloor(), setState(elevatorItems)));
         for(ElevatorItem item : elevatorItems) {
             if(item.getState() == 0 && String.valueOf(item.getTargetFloors().get(0)).equals("-1")) {
                 upsert(new ElevatorItem(item.getId(), item.getCurrentFloor(), item.getTargetFloors(), item.getMaxFloor(), 0));

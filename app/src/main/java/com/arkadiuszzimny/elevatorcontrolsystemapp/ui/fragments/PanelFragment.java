@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import com.arkadiuszzimny.elevatorcontrolsystemapp.R;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.PanelFragmentLayoutBinding;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.PanelFragmentViewModel;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.adapters.ElevatorRecyclerAdapter;
+import com.arkadiuszzimny.elevatorcontrolsystemapp.util.BubbleInterpolator;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -26,6 +29,8 @@ public class PanelFragment extends Fragment {
     private PanelFragmentLayoutBinding fragmentLayoutBinding;
     private PanelFragmentViewModel panelFragmentViewModel;
     private ElevatorRecyclerAdapter adapter;
+    private Animation bubble;
+    private BubbleInterpolator bubbleInterpolator;
 
     @Nullable
     @Override
@@ -36,8 +41,13 @@ public class PanelFragment extends Fragment {
         RecyclerView recyclerView = fragmentLayoutBinding.recyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
 
+
         adapter = new ElevatorRecyclerAdapter();
         recyclerView.setAdapter(adapter);
+
+        bubble = AnimationUtils.loadAnimation(getActivity(), R.anim.bubble);
+        bubbleInterpolator = new BubbleInterpolator(0.2, 20);
+        bubble.setInterpolator(bubbleInterpolator);
 
         panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
             if(elevatorItems.size()>0) {
@@ -56,6 +66,7 @@ public class PanelFragment extends Fragment {
                     panelFragmentViewModel.stepSimulation(elevatorItems);
                 }
             });
+            fragmentLayoutBinding.simulationButton.startAnimation(bubble);
         });
 
         return fragmentLayoutBinding.getRoot();

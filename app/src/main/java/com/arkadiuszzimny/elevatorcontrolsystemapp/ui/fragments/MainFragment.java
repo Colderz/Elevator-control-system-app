@@ -6,8 +6,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.NumberPicker;
 import android.widget.TextSwitcher;
@@ -24,6 +27,7 @@ import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.MainFragmentLayoutBinding;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.ElevatorActivity;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.MainFragmentViewModel;
+import com.arkadiuszzimny.elevatorcontrolsystemapp.util.BubbleInterpolator;
 
 import java.lang.annotation.Target;
 import java.util.ArrayList;
@@ -37,6 +41,8 @@ public class MainFragment extends Fragment {
     private TextSwitcher textSwitcher;
     private TextSwitcher textSwitcher2;
     private FrameLayout saveButton;
+    private Animation bubble;
+    private BubbleInterpolator bubbleInterpolator;
 
     public MainFragmentViewModel mainFragmentViewModel;
 
@@ -50,6 +56,9 @@ public class MainFragment extends Fragment {
         textSwitcher = fragmentLayoutBinding.textSwitcher;
         textSwitcher2 = fragmentLayoutBinding.textSwitcher2;
         saveButton = fragmentLayoutBinding.saveButton;
+        bubble = AnimationUtils.loadAnimation(getActivity(), R.anim.bubble);
+        bubbleInterpolator = new BubbleInterpolator(0.2, 20);
+        bubble.setInterpolator(bubbleInterpolator);
 
         textSwitcher.setFactory(() -> {
             textView = new TextView(getActivity());
@@ -75,6 +84,7 @@ public class MainFragment extends Fragment {
             TextView tvFloors = (TextView) textSwitcher2.getCurrentView();
             int numberOfFloors = Integer.parseInt((String) tvFloors.getText());
             setListOfElevators(numberOfElevators, numberOfFloors);
+            saveButton.startAnimation(bubble);
         });
 
         return fragmentLayoutBinding.getRoot();
