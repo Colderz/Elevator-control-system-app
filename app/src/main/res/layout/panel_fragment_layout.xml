@@ -184,35 +184,45 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="170dp"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="15dp"
-            app:cardCornerRadius="10dp">
+            android:layout_height="180dp"
+            android:layout_marginTop="8dp">
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardFloorPicker"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="170dp"
+                android:layout_marginHorizontal="25dp"
+                tools:visibility="invisible"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="25dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="sans-serif-light"
-                    android:gravity="center_horizontal"
-                    android:textStyle="bold"
-                    android:text="@string/question"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <NumberPicker
-                    android:id="@+id/pickerLevel"
-                    android:layout_width="100dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-light"
+                        android:gravity="center_horizontal"
+                        android:text="@string/question"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
+                        android:id="@+id/pickerFloor"
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -235,8 +245,8 @@
                             <ImageView
                                 android:layout_width="33dp"
                                 android:layout_height="33dp"
-                                android:src="@drawable/ic_up_arrow"
-                                android:layout_gravity="center"/>
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_up_arrow" />
 
                         </FrameLayout>
 
@@ -250,30 +260,100 @@
                             android:elevation="4dp"
                             android:foreground="?selectableItemBackground"
                             app:layout_constraintEnd_toEndOf="parent"
-                            tools:layout_editor_absoluteY="5dp"
-                            app:layout_constraintStart_toEndOf="@id/buttonUp">
+                            app:layout_constraintStart_toEndOf="@id/buttonUp"
+                            tools:layout_editor_absoluteY="5dp">
 
                             <ImageView
                                 android:layout_width="33dp"
                                 android:layout_height="33dp"
+                                android:layout_gravity="center"
                                 android:layout_marginStart="2dp"
-                                android:src="@drawable/ic_down_arrow"
-                                android:layout_gravity="center"/>
+                                android:src="@drawable/ic_down_arrow" />
 
                         </FrameLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            </LinearLayout>
+                </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardLevelWant"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginHorizontal="25dp"
+                tools:visibility="visible"
+                android:visibility="invisible"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="25dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-light"
+                        android:gravity="center_horizontal"
+                        android:text="@string/recommend"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
+                        android:id="@+id/pickerLevelWant"
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <FrameLayout
+                            android:id="@+id/buttonChoose"
+                            android:layout_width="125dp"
+                            android:layout_height="40dp"
+                            android:layout_marginVertical="5dp"
+                            android:background="@drawable/start_btn"
+                            android:clickable="true"
+                            android:elevation="4dp"
+                            android:foreground="?selectableItemBackground"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_pick" />
+
+                        </FrameLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="67dp"
             android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             app:cardCornerRadius="10dp">
 
             <LinearLayout

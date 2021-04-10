@@ -28,4 +28,7 @@
     <string name="warn_data">SET UP THE SIMULATION DATA FIRST</string>
     <string name="question">Which floor are you pick up the elevator from?</string>
     <string name="info_sim_end">THE SIMULATION IS FINISHED</string>
+    <string name="pickup">Select the level you want to get to.</string>
+    <string name="lvl">Choose</string>
+    <string name="recommend">Select the target floor</string>
 </resources>

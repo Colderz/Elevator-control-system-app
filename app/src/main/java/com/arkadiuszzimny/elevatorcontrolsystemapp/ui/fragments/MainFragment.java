@@ -75,7 +75,7 @@ public class MainFragment extends Fragment {
             return textView2;
         });
 
-        setConfigurationData(mainFragmentViewModel, fragmentLayoutBinding);
+        setConfigurationData();
 
         saveButton.setOnClickListener(v -> {
             Toast.makeText(getActivity(), R.string.saved, Toast.LENGTH_SHORT).show();
@@ -104,16 +104,16 @@ public class MainFragment extends Fragment {
         textSwitcher2.setText(String.valueOf(floors));
     }
 
-    private void setConfigurationData(MainFragmentViewModel mainFragmentViewModel, MainFragmentLayoutBinding binding) {
+    private void setConfigurationData() {
         mainFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
             int numberOfElev = 3;
             int numberOfFloors = 10;
             if (!elevatorItems.isEmpty()) {
                 numberOfElev = elevatorItems.size();
                 numberOfFloors = elevatorItems.get(0).getMaxFloor();
-                setupPickersAndSwitchers(binding.pickerNumber, binding.pickerLevel, numberOfElev, numberOfFloors);
+                setupPickersAndSwitchers(fragmentLayoutBinding.pickerNumber, fragmentLayoutBinding.pickerLevel, numberOfElev, numberOfFloors);
             } else {
-                setupPickersAndSwitchers(binding.pickerNumber, binding.pickerLevel, numberOfElev, numberOfFloors);
+                setupPickersAndSwitchers(fragmentLayoutBinding.pickerNumber, fragmentLayoutBinding.pickerLevel, numberOfElev, numberOfFloors);
             }
         });
     }
