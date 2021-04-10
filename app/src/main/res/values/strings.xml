@@ -26,4 +26,6 @@
     <string name="lack">LACK</string>
     <string name="empty_info"><![CDATA[EMPTY -> There are no passengers in the elevator]]></string>
     <string name="warn_data">SET UP THE SIMULATION DATA FIRST</string>
+    <string name="question">Which floor are you pick up the elevator from?</string>
+    <string name="info_sim_end">THE SIMULATION IS FINISHED</string>
 </resources>

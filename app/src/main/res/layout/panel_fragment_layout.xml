@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="265dp"
+        android:layout_height="260dp"
         android:background="@color/colorPrimaryDark"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,46 +63,46 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginHorizontal="31dp"
-        android:layout_marginTop="242dp"
+        android:layout_marginTop="237dp"
         android:background="@drawable/simulation_btn"
-        android:elevation="4dp"
         android:clickable="true"
+        android:elevation="4dp"
         android:foreground="?selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:clickable="true"
-                    android:fontFamily="sans-serif-light"
-                    android:text="@string/sim"
-                    android:textColor="@android:color/black"
-                    android:textSize="17sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:clickable="true"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/sim"
+                android:textColor="@android:color/black"
+                android:textSize="17sp" />
 
-                <ImageView
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="10dp"
-                    android:src="@drawable/ic_play" />
+            <ImageView
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_play" />
 
-            </LinearLayout>
+        </LinearLayout>
 
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="440dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="11dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="10dp"
             android:alpha="0.25"
             android:background="@android:color/black" />
 
@@ -179,6 +179,91 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     tools:text="7" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="15dp"
+            app:cardCornerRadius="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center_horizontal"
+                    android:textStyle="bold"
+                    android:text="@string/question"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp" />
+
+                <NumberPicker
+                    android:id="@+id/pickerLevel"
+                    android:layout_width="100dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="6dp">
+
+                        <FrameLayout
+                            android:id="@+id/buttonUp"
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginVertical="5dp"
+                            android:background="@drawable/start_btn"
+                            android:clickable="true"
+                            android:elevation="4dp"
+                            android:foreground="?selectableItemBackground"
+                            app:layout_constraintEnd_toStartOf="@+id/buttonDown"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:layout_editor_absoluteY="5dp">
+
+                            <ImageView
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:src="@drawable/ic_up_arrow"
+                                android:layout_gravity="center"/>
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:id="@+id/buttonDown"
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginVertical="5dp"
+                            android:background="@drawable/start_btn"
+                            android:clickable="true"
+                            android:elevation="4dp"
+                            android:foreground="?selectableItemBackground"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            tools:layout_editor_absoluteY="5dp"
+                            app:layout_constraintStart_toEndOf="@id/buttonUp">
+
+                            <ImageView
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:layout_marginStart="2dp"
+                                android:src="@drawable/ic_down_arrow"
+                                android:layout_gravity="center"/>
+
+                        </FrameLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </LinearLayout>
 

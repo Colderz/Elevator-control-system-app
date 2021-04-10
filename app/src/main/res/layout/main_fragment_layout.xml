@@ -149,20 +149,11 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
                     <NumberPicker
                         android:id="@+id/pickerNumber"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="100dp"
                         android:layout_height="80dp" />
-
-                </LinearLayout>
-
 
             </LinearLayout>
 
@@ -203,19 +194,11 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
                     <NumberPicker
                         android:id="@+id/pickerLevel"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="100dp"
                         android:layout_height="80dp" />
-
-                </LinearLayout>
 
             </LinearLayout>
 

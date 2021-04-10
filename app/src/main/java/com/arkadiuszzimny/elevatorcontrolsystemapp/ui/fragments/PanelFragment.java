@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ public class PanelFragment extends Fragment {
     private Animation bubble;
     private BubbleInterpolator bubbleInterpolator;
     private int clickSimulationCounter;
+    private int clickPickupCounter;
 
     @Nullable
     @Override
@@ -45,6 +47,7 @@ public class PanelFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
 
         clickSimulationCounter = 0;
+        clickPickupCounter = 0;
 
         adapter = new ElevatorRecyclerAdapter();
         recyclerView.setAdapter(adapter);
@@ -55,7 +58,9 @@ public class PanelFragment extends Fragment {
 
         panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
                 if(elevatorItems.size()>0) {
-                    fragmentLayoutBinding.tvFloors.setText(String.valueOf(elevatorItems.get(0).getMaxFloor()));
+                    int maxFloor = elevatorItems.get(0).getMaxFloor();
+                    fragmentLayoutBinding.tvFloors.setText(String.valueOf(maxFloor));
+                    setupPicker(fragmentLayoutBinding.pickerLevel, maxFloor);
                     adapter.setElevators(elevatorItems);
                 } else {
                     Toast.makeText(getActivity(), R.string.warn_data, Toast.LENGTH_SHORT).show();
@@ -63,6 +68,7 @@ public class PanelFragment extends Fragment {
         });
 
         fragmentLayoutBinding.simulationButton.setOnClickListener(v -> {
+            clickPickupCounter = 0;
             clickSimulationCounter++;
             if(!(clickSimulationCounter>6)) {
                 AtomicInteger counter = new AtomicInteger();
@@ -73,10 +79,27 @@ public class PanelFragment extends Fragment {
                     }
                 });
                 fragmentLayoutBinding.simulationButton.startAnimation(bubble);
+            } else {
+                Toast.makeText(fragmentLayoutBinding.simulationButton.getContext(), R.string.info_sim_end, Toast.LENGTH_SHORT).show();
             }
         });
 
+        fragmentLayoutBinding.buttonUp.setOnClickListener(v -> {
+            if(clickPickupCounter == 0) fragmentLayoutBinding.buttonUp.startAnimation(bubble);
+            clickPickupCounter = 1;
+        });
+
+        fragmentLayoutBinding.buttonDown.setOnClickListener(v -> {
+            if(clickPickupCounter == 0) fragmentLayoutBinding.buttonDown.startAnimation(bubble);
+            clickPickupCounter = 1;
+        });
+
         return fragmentLayoutBinding.getRoot();
+    }
+
+    private void setupPicker(NumberPicker picker, int floors) {
+        picker.setMinValue(0);
+        picker.setMaxValue(floors);
     }
 
 }
