@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ElevatorRecyclerAdapter extends RecyclerView.Adapter<ElevatorRecyclerAdapter.ViewHolder> {
+
+    //A public variable because it must be accessed by simulation button listeners etc.
     public List<ElevatorItem> elevators = new ArrayList<>();
 
     @NonNull
