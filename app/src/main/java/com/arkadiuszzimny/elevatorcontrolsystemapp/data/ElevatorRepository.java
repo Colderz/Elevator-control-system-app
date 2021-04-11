@@ -2,12 +2,10 @@ package com.arkadiuszzimny.elevatorcontrolsystemapp.data;
 
 import android.app.Application;
 import android.os.AsyncTask;
-
 import androidx.lifecycle.LiveData;
-
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
-
 import java.util.List;
+
 
 public class ElevatorRepository {
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ElevatorControlSystemApp</string>
+    <string name="app_name">Elevator Control System</string>
     <string name="number_elev">Number of elevators</string>
     <string name="levels">Number of floors</string>
     <string name="info">The above data will be used to simulate the operation of the elevator control system. After saving the data, a simulation based on randomly generated data will be prepared.</string>

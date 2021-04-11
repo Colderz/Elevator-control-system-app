@@ -8,6 +8,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+/**
+ * TypeConverter napisany w celu określenia sposobu odczytu kolejki. Zastosowanie listy dla obiektów typu String w łatwy sposób umożliwia użycie Gson'a.
+ */
 public class Converters {
     @TypeConverter
     public static ArrayList<String> fromInteger(String value) {
@@ -18,7 +21,6 @@ public class Converters {
     @TypeConverter
     public static String fromArrayList(ArrayList<String> list) {
         Gson gson = new Gson();
-        String json = gson.toJson(list);
-        return json;
+        return gson.toJson(list);
     }
 }

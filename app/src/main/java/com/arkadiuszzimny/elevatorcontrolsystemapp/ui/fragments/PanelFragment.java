@@ -22,14 +22,23 @@ import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.PanelFragmentViewModel;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.adapters.ElevatorRecyclerAdapter;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.util.BubbleInterpolator;
 
-
+/**
+ * Klasa fragmentu dla widoku panelu kontroli systemu połączona z dostarczonym dedykowanym ViewModelem
+ */
 public class PanelFragment extends Fragment {
 
     private PanelFragmentLayoutBinding fragmentLayoutBinding;
     private PanelFragmentViewModel panelFragmentViewModel;
     private ElevatorRecyclerAdapter adapter;
     private Animation bubble;
-    private int clickSimulationCounter, maxClickSimulation, clickPickupController, desireDirection, showLevelWantController, counterPickup;
+    /**
+     * Kontrolki umożliwiające blokadę/odblokowanie możliwości wykonywania symulacji lub wyświetlenie danych części interfejsu.
+     */
+    private int clickSimulationCounter, maxClickSimulation, clickPickupController, showLevelWantController, counterPickup;
+    /**
+     * Zmienna ustawiana po naciśnięciu odpowiedniego przycisku podczas zamawiania windy. Zmienna używana podczas wyboru pożądanego piętra.
+     */
+    private int desireDirection;
 
     @Nullable
     @Override

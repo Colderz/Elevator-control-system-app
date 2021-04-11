@@ -13,7 +13,10 @@ import java.util.List;
 @Dao
 public interface ElevatorDao {
 
-    //update or insert = upsert
+    /**
+     * update + insert = upsert
+     * @param item
+     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void upsert(ElevatorItem item);
 

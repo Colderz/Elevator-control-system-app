@@ -1,11 +1,14 @@
 package com.arkadiuszzimny.elevatorcontrolsystemapp.ui;
 
 import android.app.Application;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.ElevatorRepository;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -62,21 +65,21 @@ public class PanelFragmentViewModel extends AndroidViewModel {
     public int getNearestElevator(List<ElevatorItem> elevators, int direction, int requestFloor) {
         List<Integer> distances = new ArrayList<>();
         int elevatorID = -1;
-        if (direction == 1) {
-            //Filtered list with elevators going up below our floor and elevators standing anywhere
-            List<ElevatorItem> filteredList = elevators.stream().filter(e -> (e.getState() == 1 && e.getCurrentFloor() <= requestFloor) || e.getState() == 0).collect(Collectors.toList());
-            filteredList.forEach(elevatorItem -> distances.add(Math.abs(requestFloor - elevatorItem.getCurrentFloor())));
-            int min = Collections.min(distances);
-            elevatorID = elevators.stream().filter(elevatorItem -> Math.abs(requestFloor - elevatorItem.getCurrentFloor()) == min).collect(Collectors.toList()).get(0).getId();
-        }
-        if (direction == -1) {
-            //Filtered list with elevators going above our floor and elevators standing anywhere
-            List<ElevatorItem> filteredList = elevators.stream().filter(e -> (e.getState() == -1 && e.getCurrentFloor() >= requestFloor) || e.getState() == 0).collect(Collectors.toList());
-            filteredList.forEach(elevatorItem -> System.out.println(elevatorItem.getId()));
-            filteredList.forEach(elevatorItem -> distances.add(Math.abs(requestFloor - elevatorItem.getCurrentFloor())));
-            int min = Collections.min(distances);
-            elevatorID = elevators.stream().filter(elevatorItem -> Math.abs(elevatorItem.getCurrentFloor() - requestFloor) == min).collect(Collectors.toList()).get(0).getId();
-        }
+            if (direction == 1) {
+                //Filtered list with elevators going up below our floor and elevators standing anywhere
+                List<ElevatorItem> filteredList = elevators.stream().filter(e -> (e.getState() == 1 && e.getCurrentFloor() <= requestFloor) || e.getState() == 0).collect(Collectors.toList());
+                filteredList.forEach(elevatorItem -> distances.add(Math.abs(requestFloor - elevatorItem.getCurrentFloor())));
+                int min = Collections.min(distances);
+                elevatorID = elevators.stream().filter(elevatorItem -> Math.abs(requestFloor - elevatorItem.getCurrentFloor()) == min).collect(Collectors.toList()).get(0).getId();
+            }
+            if (direction == -1) {
+                //Filtered list with elevators going above our floor and elevators standing anywhere
+                List<ElevatorItem> filteredList = elevators.stream().filter(e -> (e.getState() == -1 && e.getCurrentFloor() >= requestFloor) || e.getState() == 0).collect(Collectors.toList());
+                filteredList.forEach(elevatorItem -> System.out.println(elevatorItem.getId()));
+                filteredList.forEach(elevatorItem -> distances.add(Math.abs(requestFloor - elevatorItem.getCurrentFloor())));
+                int min = Collections.min(distances);
+                elevatorID = elevators.stream().filter(elevatorItem -> Math.abs(elevatorItem.getCurrentFloor() - requestFloor) == min).collect(Collectors.toList()).get(0).getId();
+            }
         orderedElevatorId = elevatorID;
         orderedFloor = requestFloor;
         return elevatorID;
@@ -96,7 +99,7 @@ public class PanelFragmentViewModel extends AndroidViewModel {
     }
 
     public boolean orderFloorReachedState(List<ElevatorItem> elevators) {
-        if (elevators.get(orderedElevatorId-1).getCurrentFloor() == orderedFloor) return true;
+        if (elevators.get(orderedElevatorId - 1).getCurrentFloor() == orderedFloor) return true;
         else return false;
     }
 

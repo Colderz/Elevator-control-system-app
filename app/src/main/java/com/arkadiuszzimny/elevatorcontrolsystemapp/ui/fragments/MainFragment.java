@@ -33,6 +33,9 @@ import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Klasa fragmentu dla widoku konfiguracji systemu połączona z dostarczonym dedykowanym ViewModelem
+ */
 public class MainFragment extends Fragment {
 
     private MainFragmentLayoutBinding fragmentLayoutBinding;
@@ -90,6 +93,11 @@ public class MainFragment extends Fragment {
         return fragmentLayoutBinding.getRoot();
     }
 
+    /**
+     * Metoda ustawiająca wartości dla obu pickerów w MainFragment oraz dla obu textSwitcherów
+     * @param elev opisuje liczbę wind w systemie
+     * @param floors opisuje liczbę pięter w systemie
+     */
     private void setupPickersAndSwitchers(NumberPicker pickerNumber, NumberPicker pickerLevel, int elev, int floors) {
         pickerNumber.setMinValue(1);
         pickerNumber.setMaxValue(16);
@@ -104,6 +112,12 @@ public class MainFragment extends Fragment {
         textSwitcher2.setText(String.valueOf(floors));
     }
 
+    /**
+     * Metoda używa obserwatora dla listy, aby uniknąć błędu ustawiania danych dla jeszcze nie zainicjalizowanej tablicy.
+     * Oba pickery oraz textSwitchery ustawione są na domyślne wartości 3 oraz 10, lecz jest to ustawienie całkowicie losowe i nic nie znaczące.
+     * Proste sprawdzenie czy lista posiada elementy umożliwia nam wywołanie metody setupPickersAndSwitchers.
+     * Metoda nie przyjmuje żadnych argumentów.
+     */
     private void setConfigurationData() {
         mainFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
             int numberOfElev = 3;
@@ -118,6 +132,11 @@ public class MainFragment extends Fragment {
         });
     }
 
+    /**
+     * Metoda inicjalizująca stworzenie listy wind oraz wygenerowanie danych startowych symulacji za pomocą metod generateRandomState oraz generateRandomLevel dla każdej z wind.
+     * @param numberOfElevators
+     * @param numberOfFloors
+     */
     private void setListOfElevators(int numberOfElevators, int numberOfFloors) {
         mainFragmentViewModel.deleteAllElevators();
         for (int i = 1; i <= numberOfElevators; i++) {

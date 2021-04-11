@@ -12,7 +12,10 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-
+/**
+ * Encja bazy danych opisująca potrzebna do opisu stanu pojedynczej windy. Intuicyjnie są to ID windy, obecne piętro, kolejka pięter oraz stan windy/kierunek poruszania
+ * Określenie sposobu odczytu targetFloors wymagała zastosowania Type Convertera
+ */
 @Entity(tableName = "elevators_table")
 public class ElevatorItem {
     @NonNull

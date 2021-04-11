@@ -15,6 +15,9 @@ import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Zwyczajna klasa abstrakcyjna Database rozszerzająca RoomDatabase
+ */
 @Database(entities = {ElevatorItem.class}, version = 6, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class ElevatorDatabase extends RoomDatabase {
