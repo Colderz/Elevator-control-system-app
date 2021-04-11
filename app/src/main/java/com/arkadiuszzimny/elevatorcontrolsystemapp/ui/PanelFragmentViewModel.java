@@ -1,6 +1,7 @@
 package com.arkadiuszzimny.elevatorcontrolsystemapp.ui;
 
 import android.app.Application;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
 public class PanelFragmentViewModel extends AndroidViewModel {
     private ElevatorRepository repository;
     private LiveData<List<ElevatorItem>> allElevators;
+    private int orderedElevatorId = -1;
+    private int orderedFloor = -1;
 
     public PanelFragmentViewModel(@NonNull Application application) {
         super(application);
@@ -68,29 +71,29 @@ public class PanelFragmentViewModel extends AndroidViewModel {
         if (direction == 1) {
             //Filtered list with elevators going up below our floor and elevators standing anywhere
             List<ElevatorItem> filteredList = elevators.stream().filter(e -> (e.getState() == 1 && e.getCurrentFloor() <= requestFloor) || e.getState() == 0).collect(Collectors.toList());
-            filteredList.forEach(elevatorItem -> distances.add(Math.abs(requestFloor-elevatorItem.getCurrentFloor())));
+            filteredList.forEach(elevatorItem -> distances.add(Math.abs(requestFloor - elevatorItem.getCurrentFloor())));
             int min = Collections.min(distances);
-            elevatorID = elevators.stream().filter(elevatorItem -> Math.abs(requestFloor-elevatorItem.getCurrentFloor())==min).collect(Collectors.toList()).get(0).getId();
+            elevatorID = elevators.stream().filter(elevatorItem -> Math.abs(requestFloor - elevatorItem.getCurrentFloor()) == min).collect(Collectors.toList()).get(0).getId();
         }
         if (direction == -1) {
             //Filtered list with elevators going above our floor and elevators standing anywhere
             List<ElevatorItem> filteredList = elevators.stream().filter(e -> (e.getState() == -1 && e.getCurrentFloor() >= requestFloor) || e.getState() == 0).collect(Collectors.toList());
-            System.out.println("SIZE ===================== " +filteredList.size());
             filteredList.forEach(elevatorItem -> System.out.println(elevatorItem.getId()));
-            System.out.println("WSZEDŁEM TU =============================== ");
-            filteredList.forEach(elevatorItem -> distances.add(Math.abs(requestFloor-elevatorItem.getCurrentFloor())));
+            filteredList.forEach(elevatorItem -> distances.add(Math.abs(requestFloor - elevatorItem.getCurrentFloor())));
             int min = Collections.min(distances);
-            elevatorID = elevators.stream().filter(elevatorItem -> Math.abs(elevatorItem.getCurrentFloor()-requestFloor)==min).collect(Collectors.toList()).get(0).getId();
+            elevatorID = elevators.stream().filter(elevatorItem -> Math.abs(elevatorItem.getCurrentFloor() - requestFloor) == min).collect(Collectors.toList()).get(0).getId();
         }
+        orderedElevatorId = elevatorID;
+        orderedFloor = requestFloor;
         return elevatorID;
     }
 
     public void addToQueue(List<ElevatorItem> elevators, int direction, int nearestElevatorId, int requestFloor) {
-        int currentFloor = elevators.get(nearestElevatorId-1).getCurrentFloor();
+        int currentFloor = elevators.get(nearestElevatorId - 1).getCurrentFloor();
         int maxFloor = elevators.get(0).getMaxFloor();
         int forceDirection = 0;
-        if(direction == 0) {
-            forceDirection = elevators.get(nearestElevatorId-1).getCurrentFloor() > requestFloor ? -1 : 1;
+        if (direction == 0) {
+            forceDirection = elevators.get(nearestElevatorId - 1).getCurrentFloor() > requestFloor ? -1 : 1;
         } else {
             forceDirection = direction;
         }
@@ -98,13 +101,13 @@ public class PanelFragmentViewModel extends AndroidViewModel {
         for (ElevatorItem elevator : elevators) {
             arrayOfTargets.add(elevator.getTargetFloors());
         }
-        arrayOfTargets.get(nearestElevatorId-1).add(""+requestFloor);
-        if(String.valueOf(arrayOfTargets.get(nearestElevatorId-1).get(0)).equals("-1")) {
-            arrayOfTargets.get(nearestElevatorId-1).remove(0);
+        arrayOfTargets.get(nearestElevatorId - 1).add(String.valueOf(requestFloor));
+        if (String.valueOf(arrayOfTargets.get(nearestElevatorId - 1).get(0)).equals("-1")) {
+            arrayOfTargets.get(nearestElevatorId - 1).remove(0);
         }
-        ArrayList<String> s = arrayOfTargets.get(nearestElevatorId-1);
+        ArrayList<String> s = arrayOfTargets.get(nearestElevatorId - 1);
         List<Integer> queueToSort = new ArrayList<>();
-        for(int i = 0; i<s.size(); i++) {
+        for (int i = 0; i < s.size(); i++) {
             queueToSort.add(Integer.parseInt(String.valueOf(s.get(i))));
         }
         Set<Integer> set = new HashSet<>(queueToSort);
@@ -112,7 +115,7 @@ public class PanelFragmentViewModel extends AndroidViewModel {
         queueToSort.addAll(set);
         if (direction == 1) {
             Collections.sort(queueToSort);
-        } else if(direction == -1) {
+        } else if (direction == -1) {
             Collections.sort(queueToSort, Collections.reverseOrder());
         }
         ArrayList<String> sortedList = new ArrayList<>();
@@ -121,5 +124,41 @@ public class PanelFragmentViewModel extends AndroidViewModel {
         }
         System.out.println(sortedList);
         upsert(new ElevatorItem(nearestElevatorId, currentFloor, sortedList, maxFloor, forceDirection));
+    }
+
+    public boolean orderFloorReachedState(List<ElevatorItem> elevators) {
+        if (elevators.get(orderedElevatorId-1).getCurrentFloor() == orderedFloor) return true;
+        else return false;
+    }
+
+    public void addWantLevelToQueue(List<ElevatorItem> elevators, int desireDirection, int pickerLevelWant) {
+        int currentFloor = orderedFloor;
+        int maxFloor = elevators.get(0).getMaxFloor();
+        ArrayList<ArrayList<String>> arrayOfTargets = new ArrayList<>();
+        for (ElevatorItem elevator : elevators) {
+            arrayOfTargets.add(elevator.getTargetFloors());
+        }
+        arrayOfTargets.get(orderedElevatorId-1).add(String.valueOf(pickerLevelWant));
+        if (String.valueOf(arrayOfTargets.get(orderedElevatorId-1).get(0)).equals("-1")) {
+            arrayOfTargets.get(orderedElevatorId-1).remove(0);
+        }
+        ArrayList<String> s = arrayOfTargets.get(orderedElevatorId-1);
+        List<Integer> queueToSort = new ArrayList<>();
+        for (int i = 0; i < s.size(); i++) {
+            queueToSort.add(Integer.parseInt(String.valueOf(s.get(i))));
+        }
+        Set<Integer> set = new HashSet<>(queueToSort);
+        queueToSort.clear();
+        queueToSort.addAll(set);
+        if (desireDirection == 1) {
+            Collections.sort(queueToSort);
+        } else if (desireDirection == -1) {
+            Collections.sort(queueToSort, Collections.reverseOrder());
+        }
+        ArrayList<String> sortedList = new ArrayList<>();
+        for (Integer integer : queueToSort) {
+            sortedList.add(String.valueOf(integer));
+        }
+        upsert(new ElevatorItem(orderedElevatorId, currentFloor, sortedList, maxFloor, desireDirection));
     }
 }

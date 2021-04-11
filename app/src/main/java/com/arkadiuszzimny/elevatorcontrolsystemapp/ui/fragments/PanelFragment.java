@@ -37,7 +37,7 @@ public class PanelFragment extends Fragment {
     private PanelFragmentViewModel panelFragmentViewModel;
     private ElevatorRecyclerAdapter adapter;
     private Animation bubble;
-    private int clickSimulationCounter, maxClickSimulation, clickPickupController;
+    private int clickSimulationCounter, maxClickSimulation, clickPickupController, desireDirection;
 
     @Nullable
     @Override
@@ -72,7 +72,10 @@ public class PanelFragment extends Fragment {
         fragmentLayoutBinding.simulationButton.setOnClickListener(v -> {
             clickSimulationCounter++;
             if (clickPickupController == 1) {
-                preparePickupCardAgain();
+                if(orderFloorReached()) {
+                    preparePickupCardAgain();
+                    Toast.makeText(getActivity(), R.string.lift_info, Toast.LENGTH_LONG).show();
+                }
             }
             if (!(clickSimulationCounter > maxClickSimulation)) {
                 panelFragmentViewModel.stepSimulation(adapter.elevators);
@@ -83,6 +86,7 @@ public class PanelFragment extends Fragment {
         });
 
         fragmentLayoutBinding.buttonUp.setOnClickListener(v -> {
+            desireDirection = 1;
             if (clickPickupController == 0) {
                 fragmentLayoutBinding.buttonUp.setAlpha(0.2F);
                 fragmentLayoutBinding.buttonUp.setClickable(false);
@@ -95,6 +99,7 @@ public class PanelFragment extends Fragment {
         });
 
         fragmentLayoutBinding.buttonDown.setOnClickListener(v -> {
+            desireDirection = -1;
             if (clickPickupController == 0) {
                 fragmentLayoutBinding.buttonDown.setAlpha(0.2F);
                 fragmentLayoutBinding.buttonUp.setClickable(false);
@@ -110,9 +115,14 @@ public class PanelFragment extends Fragment {
         fragmentLayoutBinding.buttonChoose.setOnClickListener(v -> {
             hideLevelWantPicker();
             showFloorPicker();
+            panelFragmentViewModel.addWantLevelToQueue(adapter.elevators, desireDirection, fragmentLayoutBinding.pickerLevelWant.getValue());
         });
 
         return fragmentLayoutBinding.getRoot();
+    }
+
+    private boolean orderFloorReached() {
+        return panelFragmentViewModel.orderFloorReachedState(adapter.elevators);
     }
 
     private void preparePickupCardAgain() {
@@ -128,6 +138,7 @@ public class PanelFragment extends Fragment {
     private void setIntegerValues() {
         clickSimulationCounter = 0;
         clickPickupController = 0;
+        desireDirection = 0;
     }
 
     private void showLevelWantPicker() {
@@ -180,15 +191,14 @@ public class PanelFragment extends Fragment {
         if (nearestElevatorId != -1)
             Toast.makeText(getActivity(), "Elevator number " + nearestElevatorId + " will arrive", Toast.LENGTH_LONG).show();
         else
-            Toast.makeText(getActivity(), "No elevator available, wait.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.wait, Toast.LENGTH_LONG).show();
         addOrderToQueue(nearestElevatorId, requestFloor);
     }
 
     private void addOrderToQueue(int nearestElevatorId, int requestFloor) {
         clickSimulationCounter--;
-        int direction = adapter.elevators.get(nearestElevatorId-1).getState();
+        int direction = adapter.elevators.get(nearestElevatorId - 1).getState();
         panelFragmentViewModel.addToQueue(adapter.elevators, direction, nearestElevatorId, requestFloor);
-
     }
 
 }
