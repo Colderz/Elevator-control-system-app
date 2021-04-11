@@ -60,7 +60,6 @@ public class PanelFragment extends Fragment {
                 int maxFloor = elevatorItems.get(0).getMaxFloor();
                 fragmentLayoutBinding.tvFloors.setText(String.valueOf(maxFloor));
                 setupPickerFloor(fragmentLayoutBinding.pickerFloor, maxFloor);
-                setupPickerFloor(fragmentLayoutBinding.pickerLevelWant, maxFloor);
                 adapter.setElevators(elevatorItems);
             } else {
                 Toast.makeText(getActivity(), R.string.warn_data, Toast.LENGTH_SHORT).show();
@@ -84,21 +83,27 @@ public class PanelFragment extends Fragment {
         });
 
         fragmentLayoutBinding.buttonUp.setOnClickListener(v -> {
-            fragmentLayoutBinding.buttonUp.startAnimation(bubble);
             hideFloorPicker();
             showLevelWantPicker();
+            setupPickerLevelWant(fragmentLayoutBinding.pickerLevelWant, Integer.valueOf(String.valueOf(fragmentLayoutBinding.tvFloors.getText())), fragmentLayoutBinding.pickerFloor.getValue());
         });
 
         fragmentLayoutBinding.buttonDown.setOnClickListener(v -> {
-            fragmentLayoutBinding.buttonDown.startAnimation(bubble);
             hideFloorPicker();
             showLevelWantPicker();
+            setupPickerLevelWant(fragmentLayoutBinding.pickerLevelWant, fragmentLayoutBinding.pickerFloor.getValue(), 0);
+        });
+
+
+        fragmentLayoutBinding.buttonChoose.setOnClickListener(v -> {
+            hideLevelWantPicker();
+            showFloorPicker();
         });
 
         return fragmentLayoutBinding.getRoot();
     }
 
-    private void showLevelWantPicker(){
+    private void showLevelWantPicker() {
         fragmentLayoutBinding.cardLevelWant.setVisibility(View.VISIBLE);
     }
 
@@ -106,7 +111,7 @@ public class PanelFragment extends Fragment {
         fragmentLayoutBinding.cardFloorPicker.setVisibility(View.VISIBLE);
     }
 
-    private void hideFloorPicker(){
+    private void hideFloorPicker() {
         fragmentLayoutBinding.cardFloorPicker.setVisibility(View.INVISIBLE);
     }
 
@@ -117,8 +122,24 @@ public class PanelFragment extends Fragment {
     private void setupPickerFloor(NumberPicker picker, int floors) {
         picker.setMinValue(0);
         picker.setMaxValue(floors);
+        picker.setValue(1);
+        picker.setOnValueChangedListener((picker1, oldVal, newVal) -> {
+            if (picker1.getValue() == 0)
+                fragmentLayoutBinding.buttonDown.setVisibility(View.INVISIBLE);
+            if (picker1.getValue() == floors)
+                fragmentLayoutBinding.buttonUp.setVisibility(View.INVISIBLE);
+            if (picker1.getValue() != 0)
+                fragmentLayoutBinding.buttonDown.setVisibility(View.VISIBLE);
+            if (picker1.getValue() != floors)
+                fragmentLayoutBinding.buttonUp.setVisibility(View.VISIBLE);
+        });
     }
 
+    private void setupPickerLevelWant(NumberPicker picker, int maxFloors, int minValue) {
+        picker.setMinValue(minValue);
+        picker.setMaxValue(maxFloors);
+        picker.setValue(minValue);
+    }
 
 
 }

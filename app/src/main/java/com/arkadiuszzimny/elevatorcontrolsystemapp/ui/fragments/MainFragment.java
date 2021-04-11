@@ -60,14 +60,14 @@ public class MainFragment extends Fragment {
         bubbleInterpolator = new BubbleInterpolator(0.2, 20);
         bubble.setInterpolator(bubbleInterpolator);
 
-        textSwitcher.setFactory(() -> {
+        fragmentLayoutBinding.textSwitcher.setFactory(() -> {
             textView = new TextView(getActivity());
             textView.setTextColor(Color.WHITE);
             textView.setTextSize(55);
             textView.setGravity(Gravity.CENTER_HORIZONTAL);
             return textView;
         });
-        textSwitcher2.setFactory(() -> {
+        fragmentLayoutBinding.textSwitcher2.setFactory(() -> {
             textView2 = new TextView(getActivity());
             textView2.setTextColor(Color.WHITE);
             textView2.setTextSize(30);
