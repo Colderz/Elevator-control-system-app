@@ -8,27 +8,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.NumberPicker;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.arkadiuszzimny.elevatorcontrolsystemapp.R;
-import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.PanelFragmentLayoutBinding;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.PanelFragmentViewModel;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.adapters.ElevatorRecyclerAdapter;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.util.BubbleInterpolator;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class PanelFragment extends Fragment {

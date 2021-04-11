@@ -1,18 +1,12 @@
 package com.arkadiuszzimny.elevatorcontrolsystemapp.ui;
 
 import android.app.Application;
-import android.widget.NumberPicker;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.ElevatorRepository;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.data.entities.ElevatorItem;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -97,32 +91,7 @@ public class PanelFragmentViewModel extends AndroidViewModel {
         } else {
             forceDirection = direction;
         }
-        ArrayList<ArrayList<String>> arrayOfTargets = new ArrayList<>();
-        for (ElevatorItem elevator : elevators) {
-            arrayOfTargets.add(elevator.getTargetFloors());
-        }
-        arrayOfTargets.get(nearestElevatorId - 1).add(String.valueOf(requestFloor));
-        if (String.valueOf(arrayOfTargets.get(nearestElevatorId - 1).get(0)).equals("-1")) {
-            arrayOfTargets.get(nearestElevatorId - 1).remove(0);
-        }
-        ArrayList<String> s = arrayOfTargets.get(nearestElevatorId - 1);
-        List<Integer> queueToSort = new ArrayList<>();
-        for (int i = 0; i < s.size(); i++) {
-            queueToSort.add(Integer.parseInt(String.valueOf(s.get(i))));
-        }
-        Set<Integer> set = new HashSet<>(queueToSort);
-        queueToSort.clear();
-        queueToSort.addAll(set);
-        if (direction == 1) {
-            Collections.sort(queueToSort);
-        } else if (direction == -1) {
-            Collections.sort(queueToSort, Collections.reverseOrder());
-        }
-        ArrayList<String> sortedList = new ArrayList<>();
-        for (Integer integer : queueToSort) {
-            sortedList.add(String.valueOf(integer));
-        }
-        System.out.println(sortedList);
+        ArrayList<String> sortedList = getSortedList(elevators, nearestElevatorId, forceDirection, requestFloor);
         upsert(new ElevatorItem(nearestElevatorId, currentFloor, sortedList, maxFloor, forceDirection));
     }
 
@@ -134,15 +103,20 @@ public class PanelFragmentViewModel extends AndroidViewModel {
     public void addWantLevelToQueue(List<ElevatorItem> elevators, int desireDirection, int pickerLevelWant) {
         int currentFloor = orderedFloor;
         int maxFloor = elevators.get(0).getMaxFloor();
+        ArrayList<String> sortedList = getSortedList(elevators, orderedElevatorId, desireDirection, pickerLevelWant);
+        upsert(new ElevatorItem(orderedElevatorId, currentFloor, sortedList, maxFloor, desireDirection));
+    }
+
+    private ArrayList<String> getSortedList(List<ElevatorItem> elevators, int elevatorId, int elevatorDirection, int requestFloor) {
         ArrayList<ArrayList<String>> arrayOfTargets = new ArrayList<>();
         for (ElevatorItem elevator : elevators) {
             arrayOfTargets.add(elevator.getTargetFloors());
         }
-        arrayOfTargets.get(orderedElevatorId-1).add(String.valueOf(pickerLevelWant));
-        if (String.valueOf(arrayOfTargets.get(orderedElevatorId-1).get(0)).equals("-1")) {
-            arrayOfTargets.get(orderedElevatorId-1).remove(0);
+        arrayOfTargets.get(elevatorId - 1).add(String.valueOf(requestFloor));
+        if (String.valueOf(arrayOfTargets.get(elevatorId - 1).get(0)).equals("-1")) {
+            arrayOfTargets.get(elevatorId - 1).remove(0);
         }
-        ArrayList<String> s = arrayOfTargets.get(orderedElevatorId-1);
+        ArrayList<String> s = arrayOfTargets.get(elevatorId - 1);
         List<Integer> queueToSort = new ArrayList<>();
         for (int i = 0; i < s.size(); i++) {
             queueToSort.add(Integer.parseInt(String.valueOf(s.get(i))));
@@ -150,15 +124,15 @@ public class PanelFragmentViewModel extends AndroidViewModel {
         Set<Integer> set = new HashSet<>(queueToSort);
         queueToSort.clear();
         queueToSort.addAll(set);
-        if (desireDirection == 1) {
+        if (elevatorDirection == 1) {
             Collections.sort(queueToSort);
-        } else if (desireDirection == -1) {
+        } else if (elevatorDirection == -1) {
             Collections.sort(queueToSort, Collections.reverseOrder());
         }
         ArrayList<String> sortedList = new ArrayList<>();
         for (Integer integer : queueToSort) {
             sortedList.add(String.valueOf(integer));
         }
-        upsert(new ElevatorItem(orderedElevatorId, currentFloor, sortedList, maxFloor, desireDirection));
+        return sortedList;
     }
 }
