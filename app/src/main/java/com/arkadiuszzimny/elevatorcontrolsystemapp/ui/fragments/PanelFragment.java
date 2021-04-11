@@ -36,6 +36,7 @@ public class PanelFragment extends Fragment {
     private Animation bubble;
     private BubbleInterpolator bubbleInterpolator;
     private int clickSimulationCounter;
+    private int maxClickSimulation;
 
     @Nullable
     @Override
@@ -47,6 +48,7 @@ public class PanelFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
 
         clickSimulationCounter = 0;
+        setMaxClickSimulation();
 
         adapter = new ElevatorRecyclerAdapter();
         recyclerView.setAdapter(adapter);
@@ -68,7 +70,7 @@ public class PanelFragment extends Fragment {
 
         fragmentLayoutBinding.simulationButton.setOnClickListener(v -> {
             clickSimulationCounter++;
-            if (!(clickSimulationCounter > 6)) {
+            if (!(clickSimulationCounter > maxClickSimulation)) {
                 AtomicInteger counter = new AtomicInteger();
                 panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
                     if (counter.get() == 0) {
@@ -141,5 +143,14 @@ public class PanelFragment extends Fragment {
         picker.setValue(minValue);
     }
 
+    private void setMaxClickSimulation() {
+        panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
+            for(ElevatorItem item : elevatorItems) {
+                if(item.getTargetFloors().size() > maxClickSimulation) {
+                    maxClickSimulation = item.getTargetFloors().size();
+                }
+            }
+        });
+    }
 
 }
