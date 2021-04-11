@@ -11,7 +11,7 @@ Uproszczona instrukcja obsługi aplikacji przedstawiona została w wideo poniże
 
 Kliknij powyższy obrazek, aby obejrzeć prezentację wideo.
 
-Symulacja niefortunnie wygenerowała się w dość prosty sposób, gdzie większość wind stoi w miejscu, lecz nie przeszkadza to w prawdiłowym zaprezentowaniu działania aplikacji.
+Symulacja niefortunnie wygenerowała się w dość prosty sposób, gdzie większość wind stoi w miejscu, lecz nie przeszkadza to w prawidłowym zaprezentowaniu działania aplikacji.
 
 # Kanban board @Trello
 
