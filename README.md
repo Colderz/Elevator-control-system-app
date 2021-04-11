@@ -10,6 +10,7 @@ Uproszczona instrukcja obsługi aplikacji przedstawiona została w wideo poniże
 [![N|Solid](https://i.imgur.com/S7lfJgg.png)](https://youtu.be/gMqsxHS69dY)
 
 Kliknij powyższy obrazek, aby obejrzeć prezentację wideo.
+Symulacja niefortunnie wygenerowała się dość prosty sposób, gdzie większość wind stoi w miejscu, lecz nie przeszkadza to w prawdiłowym zaprezentowaniu działania aplikacji.
 
 # Kanban board @Trello
 
