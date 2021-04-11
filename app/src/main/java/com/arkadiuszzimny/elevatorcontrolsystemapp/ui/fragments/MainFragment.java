@@ -120,8 +120,8 @@ public class MainFragment extends Fragment {
      */
     private void setConfigurationData() {
         mainFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> {
-            int numberOfElev = 3;
-            int numberOfFloors = 10;
+            int numberOfElev = 10;
+            int numberOfFloors = 25;
             if (!elevatorItems.isEmpty()) {
                 numberOfElev = elevatorItems.size();
                 numberOfFloors = elevatorItems.get(0).getMaxFloor();

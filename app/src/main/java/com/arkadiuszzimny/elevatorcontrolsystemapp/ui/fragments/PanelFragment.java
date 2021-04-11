@@ -23,7 +23,8 @@ import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.adapters.ElevatorRecyclerA
 import com.arkadiuszzimny.elevatorcontrolsystemapp.util.BubbleInterpolator;
 
 /**
- * Klasa fragmentu dla widoku panelu kontroli systemu połączona z dostarczonym dedykowanym ViewModelem
+ * Klasa fragmentu dla widoku panelu kontroli systemu połączona z dostarczonym dedykowanym ViewModelem. Zdaję sobie sprawę, że do
+ * obsługi wyświetlanych taostów mogłem użyć coś typu "ToastManagera", aby zapobiec ich nakładaniu, lecz postanowiłem zostawić tak jak jest to domyślnie nie komplikując kodu na tym etapie.
  */
 public class PanelFragment extends Fragment {
 
@@ -137,10 +138,16 @@ public class PanelFragment extends Fragment {
         return fragmentLayoutBinding.getRoot();
     }
 
+    /**
+     * Metoda zwraca prawdę lub fałsz w zalezności od tego czy zamówione piętro jest równe aktualnemu piętru windy.
+     */
     private boolean orderFloorReached() {
         return panelFragmentViewModel.orderFloorReachedState(adapter.elevators);
     }
 
+    /**
+     * Metoda znajdująca zastosowanie w zmianie widoczności karty zamawiania windy
+     */
     private void preparePickupCardAgain() {
         clickPickupController = 0;
         hideFloorPicker();
@@ -151,6 +158,9 @@ public class PanelFragment extends Fragment {
         fragmentLayoutBinding.buttonDown.setClickable(true);
     }
 
+    /**
+     * Metoda inicjalizująca wartości dla wyżej opisanych zmiennych
+     */
     private void setIntegerValues() {
         clickSimulationCounter = 0;
         clickPickupController = 0;
@@ -175,6 +185,9 @@ public class PanelFragment extends Fragment {
         fragmentLayoutBinding.cardLevelWant.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * Metoda ustawiająca dane dla pickera/karty wyboru piętra zamawiania windy
+     */
     private void setupPickerFloor(NumberPicker picker, int floors) {
         picker.setMinValue(0);
         picker.setMaxValue(floors);
@@ -191,12 +204,18 @@ public class PanelFragment extends Fragment {
         });
     }
 
+    /**
+     * Metoda ustawiająca dane dla pickera/karty wyboru piętra z poziomu windy
+     */
     private void setupPickerLevelWant(NumberPicker picker, int maxFloors, int minValue) {
         picker.setMinValue(minValue);
         picker.setMaxValue(maxFloors);
         picker.setValue(minValue);
     }
 
+    /**
+     * Metoda ograniczająca wykonwyanie kroków symulacji
+     */
     private void setMaxClickSimulation() {
         panelFragmentViewModel.getAllElevators().observe(getActivity(), elevatorItems -> elevatorItems.forEach(elevatorItem -> {
             if (elevatorItem.getTargetFloors().size() > maxClickSimulation)
@@ -204,6 +223,9 @@ public class PanelFragment extends Fragment {
         }));
     }
 
+    /**
+     * Metoda obsługująca wyświetlenie informacji nt. zamówionej windy
+     */
     private void callNearestElevator(int direction, int requestFloor) {
         int nearestElevatorId = panelFragmentViewModel.getNearestElevator(adapter.elevators, direction, requestFloor);
         if (nearestElevatorId != -1)
@@ -213,6 +235,11 @@ public class PanelFragment extends Fragment {
         addOrderToQueue(nearestElevatorId, requestFloor);
     }
 
+    /**
+     * Meotda wywołująca algorytm dodanie piętra do kolejki odpowiedniej windy
+     * @param nearestElevatorId ustalone wcześniej ID najbliższej windy/windy która została zamówiona
+     * @param requestFloor piętro zamówienia windy
+     */
     private void addOrderToQueue(int nearestElevatorId, int requestFloor) {
         int direction = adapter.elevators.get(nearestElevatorId - 1).getState();
         panelFragmentViewModel.addToQueue(adapter.elevators, direction, nearestElevatorId, requestFloor);
