@@ -7,7 +7,7 @@ Krok po kroku opisane jest to w wideo poniżej.
 ![N|Solid](https://i.imgur.com/RcVSW1K.jpg) ![N|Solid](https://i.imgur.com/AG4x8Uf.jpg) ![N|Solid](https://i.imgur.com/JOeHxVO.jpg) ![N|Solid](https://i.imgur.com/1cq1FGO.jpg)
 
 # Video presentation
-[![N|Solid]()
+[![N|Solid](https://i.imgur.com/S7lfJgg.png)](https://youtu.be/gMqsxHS69dY)
 
 Kliknij powyższy obrazek, aby obejrzeć prezentację wideo.
 
@@ -39,4 +39,6 @@ Stworzyłem własną tablicę Kanban, używając Trello do zarządzania zadaniam
 
 ### Information from the author
 > Aplikacja zrealizowana w kilka dni w godzinach wieczornych
-> Zalecam uruchamiać aplikację na urządzeniu zewnętrznym, ze względu na duża ilość dynamicznych animacji użytkowanie aplikacji w emulatorze jest dość "męczące".
+> 
+> Zalecam uruchamiać aplikację na urządzeniu zewnętrznym,
+> ze względu na duża ilość dynamicznych animacji użytkowanie aplikacji w emulatorze jest dość "męczące".
