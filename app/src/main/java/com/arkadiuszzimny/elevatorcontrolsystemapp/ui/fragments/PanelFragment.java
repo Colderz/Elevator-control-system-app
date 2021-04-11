@@ -8,12 +8,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.NumberPicker;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.arkadiuszzimny.elevatorcontrolsystemapp.R;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.databinding.PanelFragmentLayoutBinding;
 import com.arkadiuszzimny.elevatorcontrolsystemapp.ui.PanelFragmentViewModel;
@@ -27,7 +29,7 @@ public class PanelFragment extends Fragment {
     private PanelFragmentViewModel panelFragmentViewModel;
     private ElevatorRecyclerAdapter adapter;
     private Animation bubble;
-    private int clickSimulationCounter, maxClickSimulation, clickPickupController, desireDirection;
+    private int clickSimulationCounter, maxClickSimulation, clickPickupController, desireDirection, showLevelWantController, counterPickup;
 
     @Nullable
     @Override
@@ -52,7 +54,9 @@ public class PanelFragment extends Fragment {
             if (elevatorItems.size() > 0) {
                 int maxFloor = elevatorItems.get(0).getMaxFloor();
                 fragmentLayoutBinding.tvFloors.setText(String.valueOf(maxFloor));
-                setupPickerFloor(fragmentLayoutBinding.pickerFloor, maxFloor);
+                if(counterPickup == 0) {
+                    setupPickerFloor(fragmentLayoutBinding.pickerFloor, maxFloor);
+                }
                 adapter.setElevators(elevatorItems);
             } else {
                 Toast.makeText(getActivity(), R.string.warn_data, Toast.LENGTH_SHORT).show();
@@ -60,15 +64,18 @@ public class PanelFragment extends Fragment {
         });
 
         fragmentLayoutBinding.simulationButton.setOnClickListener(v -> {
-            clickSimulationCounter++;
             if (clickPickupController == 1) {
-                if(orderFloorReached()) {
+                if (orderFloorReached()) {
+                    showLevelWantController = 1;
                     preparePickupCardAgain();
                     Toast.makeText(getActivity(), R.string.lift_info, Toast.LENGTH_LONG).show();
                 }
             }
             if (!(clickSimulationCounter > maxClickSimulation)) {
-                panelFragmentViewModel.stepSimulation(adapter.elevators);
+                if (showLevelWantController == 0) {
+                    clickSimulationCounter++;
+                    panelFragmentViewModel.stepSimulation(adapter.elevators);
+                }
                 fragmentLayoutBinding.simulationButton.startAnimation(bubble);
             } else {
                 Toast.makeText(fragmentLayoutBinding.simulationButton.getContext(), R.string.info_sim_end, Toast.LENGTH_SHORT).show();
@@ -76,6 +83,9 @@ public class PanelFragment extends Fragment {
         });
 
         fragmentLayoutBinding.buttonUp.setOnClickListener(v -> {
+            counterPickup = 1;
+            int requestFloor = fragmentLayoutBinding.pickerFloor.getValue();
+            clickSimulationCounter--;
             desireDirection = 1;
             if (clickPickupController == 0) {
                 fragmentLayoutBinding.buttonUp.setAlpha(0.2F);
@@ -83,12 +93,16 @@ public class PanelFragment extends Fragment {
                 fragmentLayoutBinding.buttonDown.setClickable(false);
             }
             setupPickerLevelWant(fragmentLayoutBinding.pickerLevelWant, Integer.parseInt(String.valueOf(fragmentLayoutBinding.tvFloors.getText())), fragmentLayoutBinding.pickerFloor.getValue());
-            callNearestElevator(1, fragmentLayoutBinding.pickerFloor.getValue());
+            callNearestElevator(1, requestFloor);
             fragmentLayoutBinding.buttonUp.startAnimation(bubble);
             clickPickupController = 1;
+            fragmentLayoutBinding.pickerFloor.setValue(requestFloor);
         });
 
         fragmentLayoutBinding.buttonDown.setOnClickListener(v -> {
+            counterPickup = 1;
+            int requestFloor = fragmentLayoutBinding.pickerFloor.getValue();
+            clickSimulationCounter--;
             desireDirection = -1;
             if (clickPickupController == 0) {
                 fragmentLayoutBinding.buttonDown.setAlpha(0.2F);
@@ -96,15 +110,18 @@ public class PanelFragment extends Fragment {
                 fragmentLayoutBinding.buttonDown.setClickable(false);
             }
             setupPickerLevelWant(fragmentLayoutBinding.pickerLevelWant, fragmentLayoutBinding.pickerFloor.getValue(), 0);
-            callNearestElevator(-1, fragmentLayoutBinding.pickerFloor.getValue());
+            callNearestElevator(-1, requestFloor);
             fragmentLayoutBinding.buttonDown.startAnimation(bubble);
             clickPickupController = 1;
+            fragmentLayoutBinding.pickerFloor.setValue(requestFloor);
         });
 
 
         fragmentLayoutBinding.buttonChoose.setOnClickListener(v -> {
             hideLevelWantPicker();
             showFloorPicker();
+            showLevelWantController = 0;
+            counterPickup = 0;
             panelFragmentViewModel.addWantLevelToQueue(adapter.elevators, desireDirection, fragmentLayoutBinding.pickerLevelWant.getValue());
         });
 
@@ -129,6 +146,8 @@ public class PanelFragment extends Fragment {
         clickSimulationCounter = 0;
         clickPickupController = 0;
         desireDirection = 0;
+        showLevelWantController = 0;
+        counterPickup = 0;
     }
 
     private void showLevelWantPicker() {
@@ -186,7 +205,6 @@ public class PanelFragment extends Fragment {
     }
 
     private void addOrderToQueue(int nearestElevatorId, int requestFloor) {
-        clickSimulationCounter--;
         int direction = adapter.elevators.get(nearestElevatorId - 1).getState();
         panelFragmentViewModel.addToQueue(adapter.elevators, direction, nearestElevatorId, requestFloor);
     }
